@@ -11,8 +11,8 @@ export function fetch(uri: string, data?: any): Promise<object> {
 			hostname,
 			path,
 			headers: {
-				'Content-Type': 'application/json',
-				'Content-Length': postData?.length || 0
+				'Content-Type': 'application/json; charset=UTF-8',
+				'Content-Length': Buffer.byteLength(postData || "")
 			}
 		}, res => {
 			const chunks: any = [];
@@ -21,7 +21,7 @@ export function fetch(uri: string, data?: any): Promise<object> {
 			res.on("end", () => resolve(JSON.parse(Buffer.concat(chunks).toString())));
 		});
 
-		if(postData) req.write(postData);
+		if(postData) req.write(Buffer.from(postData, 'utf8'));
 		req.end();
 	});
 }

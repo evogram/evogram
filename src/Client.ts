@@ -1,4 +1,5 @@
-import { Updates, API } from ".";
+import { API } from "./API";
+import { Updates } from "./updates";
 
 export interface IEvogramParams {
 	token: string;

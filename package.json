@@ -1,8 +1,8 @@
 {
 	"name": "evogram",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Telegram Bot Framework",
-	"main": "./dist/index.js",
+	"main": "./lib/index.js",
 	"keywords": [
 		"telegram",
 		"telegram bot api"
@@ -17,7 +17,7 @@
 		"url": "https://github.com/czvelox/evogram/issues"
 	},
 	"homepage": "https://github.com/czvelox/evogram#readme",
-	"dependencies": {
-		"@types/node": "^18.11.18"
+	"devDependencies": {
+		"@types/node": "^18.13.0"
 	}
 }
