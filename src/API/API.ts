@@ -86,7 +86,7 @@ export class API {
 	 * Use this method to send photos. On success, the sent Message is returned.
 	 */
 	public sendPhoto(params: ISendPhotoParams): Promise<IMessage> {
-		return this.call("sendPhoto", params);
+		return this.upload("sendPhoto", params);
 	}
 
 	/**
@@ -95,49 +95,49 @@ export class API {
 	 * For sending voice messages, use the sendVoice method instead.
 	 */
 	public sendAudio(params: ISendAudioParams): Promise<IMessage> {
-		return this.call("sendAudio", params);
+		return this.upload("sendAudio", params);
 	}
 
 	/**
 	 * Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
 	 */
 	public sendDocument(params: ISendDocumentParams): Promise<IMessage> {
-		return this.call("sendDocument", params);
+		return this.upload("sendDocument", params);
 	}
 
 	/**
 	 * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 	 */
 	public sendVideo(params: ISendVideoParams): Promise<IMessage> {
-		return this.call("sendVideo", params);
+		return this.upload("sendVideo", params);
 	}
 
 	/**
 	 * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
 	 */
 	public sendAnimation(params: ISendAnimationParams): Promise<IMessage> {
-		return this.call("sendAnimation", params);
+		return this.upload("sendAnimation", params);
 	}
 
 	/**
 	 * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
 	 */
 	public sendVoice(params: ISendVoiceParams): Promise<IMessage> {
-		return this.call("sendVoice", params);
+		return this.upload("sendVoice", params);
 	}
 
 	/**
 	 * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.
 	 */
 	public sendVideoNote(params: ISendVideoNoteParams): Promise<IMessage> {
-		return this.call("sendVideoNote", params);
+		return this.upload("sendVideoNote", params);
 	}
 
 	/**
 	 * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
 	 */
 	public sendMediaGroup(params: ISendMediaGroupParams): Promise<IMessage[]> {
-		return this.call("sendMediaGroup", params);
+		return this.upload("sendMediaGroup", params);
 	}
 
 	/**
@@ -312,7 +312,7 @@ export class API {
 	 * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
 	 */
 	public setChatPhoto(params: ISetChatPhotoParams): Promise<true> {
-		return this.call("setChatPhoto", params);
+		return this.upload("setChatPhoto", params);
 	}
 
 	/**
@@ -564,7 +564,7 @@ export class API {
 	 * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
 	 */
 	public editMessageMedia(params: IEditMessageMediaParams): Promise<IMessage | true> {
-		return this.call("editMessageMedia", params);
+		return this.upload("editMessageMedia", params);
 	}
 
 	/**
@@ -602,7 +602,7 @@ export class API {
 	 * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
 	 */
 	public sendSticker(params: ISendStickerParams): Promise<IMessage> {
-		return this.call("sendSticker", params);
+		return this.upload("sendSticker", params);
 	}
 
 	/**
@@ -623,21 +623,21 @@ export class API {
 	 * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
 	 */
 	public uploadStickerFile(params: IUploadStickerFileParams): Promise<IFile> {
-		return this.call("uploadStickerFile", params);
+		return this.upload("uploadStickerFile", params);
 	}
 
 	/**
 	 * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Returns True on success.
 	 */
 	public createNewStickerSet(params: ICreateNewStickerSetParams): Promise<true> {
-		return this.call("createNewStickerSet", params);
+		return this.upload("createNewStickerSet", params);
 	}
 
 	/**
 	 * Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.
 	 */
 	public addStickerToSet(params: IAddStickerToSetParams): Promise<true> {
-		return this.call("addStickerToSet", params);
+		return this.upload("addStickerToSet", params);
 	}
 
 	/**
@@ -658,7 +658,7 @@ export class API {
 	 * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only. Returns True on success.
 	 */
 	public setStickerSetThumb(params: ISetStickerSetThumbParams): Promise<true> {
-		return this.call("setStickerSetThumb", params);
+		return this.upload("setStickerSetThumb", params);
 	}
 
 	/**
@@ -731,6 +731,16 @@ export class API {
 	 */
 	public getGameHighScores(params: IGetGameHighScoresParams): Promise<IGameHighScore[]> {
 		return this.call("getGameHighScores", params);
+	}
+
+	public async upload(method: string, params: Record<string, any>) {
+		const formdata = new FormData();
+		for (let [key, value] of Object.entries(params)) {
+			if(Buffer.isBuffer(value)) formdata.append(key, new Blob([value]), "file.data");
+			else formdata.append(key, value);
+		}
+
+		return this.call(method, formdata);
 	}
 
 	public async call(method: string, params?: object): Promise<any> {
