@@ -15,7 +15,7 @@ export class Webhook extends EventTransport {
 			const chunks: any = [];
 
         	req.on("data", chunk => chunks.push(chunk));
-			req.on("end", () => { this.handler.onUpdate(JSON.parse(Buffer.concat(chunks).toString())); res.end() });
+			req.on("end", () => { this.handler.onUpdate(this.client.contexts.getContext("Update", JSON.parse(Buffer.concat(chunks).toString()))); res.end() });
 		});
 	}
 	
@@ -29,7 +29,7 @@ export class Webhook extends EventTransport {
 		if(!this.webhookServer) this.webhookServer = this.createServer();
 		
 
-		await this.api.setWebhook(params)
+		await this.client.api.setWebhook(params)
 		this.webhookServer.listen(port || 8080);
 		this.state = EventTransportState.Enabled;
 	}

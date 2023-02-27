@@ -1,0 +1,51 @@
+import { IUpdate, IUpdateName } from "../interfaces";
+import { Context } from "../modules/context";
+
+export class UpdateContext extends Context<IUpdate> {
+	/** The identifier of the update. */
+	public get id() { return this.source.update_id }
+	/** The name of the type of the update, if it can be determined from the update object. */
+	public name: IUpdateName | undefined = 
+		this.source.message && "message" ||
+		this.source.edited_message && "edited_message" ||
+		this.source.channel_post && "channel_post" ||
+		this.source.edited_channel_post && "edited_channel_post" ||
+		this.source.inline_query && "inline_query" ||
+		this.source.callback_query && "callback_query" ||
+		this.source.shipping_query && "shipping_query" ||
+		this.source.pre_checkout_query && "pre_checkout_query" ||
+		this.source.poll && "poll" ||
+		this.source.poll_answer && "poll_answer" ||
+		this.source.my_chat_member && "my_chat_member" ||
+		this.source.chat_member && "chat_member" ||
+		this.source.chat_join_request && "chat_join_request";
+
+	/** The context for the message in the update, if there is one. */
+	public message = this.source.message && this.client.contexts.getContext("Message", this.source.message);
+	/** The context for the edited message in the update, if there is one. */
+	public edited_message = this.source.edited_message && this.client.contexts.getContext("Message", this.source.edited_message);
+	/** The context for the channel post in the update, if there is one. */
+	public channel_post = this.source.channel_post && this.client.contexts.getContext("Message", this.source.channel_post);
+	/** The context for the edited channel post in the update, if there is one. */
+	public edited_channel_post = this.source.edited_channel_post && this.client.contexts.getContext("Message", this.source.edited_channel_post);
+	/** The context for the inline query in the update, if there is one. */
+	public inline_query = this.source.inline_query && this.client.contexts.getContext("InlineQuery", this.source.inline_query);
+	/** The context for the chosen inline result in the update, if there is one. */
+	public chosen_inline_result = this.source.chosen_inline_result && this.client.contexts.getContext("ChosenInlineResult", this.source.chosen_inline_result);
+	/** The context for the callback query in the update, if there is one. */
+	public callback_query = this.source.callback_query && this.client.contexts.getContext("CallbackQuery", this.source.callback_query);
+	/** The context for the shipping query in the update, if there is one. */
+	public shipping_query = this.source.shipping_query && this.client.contexts.getContext("ShippingQuery", this.source.shipping_query);
+	/** The context for the pre checkout query in the update, if there is one. */
+	public pre_checkout_query = this.source.pre_checkout_query && this.client.contexts.getContext("PreCheckoutQuery", this.source.pre_checkout_query);
+	/** The context for the poll in the update, if there is one. */
+	public poll = this.source.poll && this.client.contexts.getContext("Poll", this.source.poll);
+	/** The context for the poll answer in the update, if there is one. */
+	public poll_answer = this.source.poll_answer && this.client.contexts.getContext("PollAnswer", this.source.poll_answer);
+	/** The context for the my chat member in the update, if there is one. */
+	public my_chat_member = this.source.my_chat_member && this.client.contexts.getContext("ChatMemberUpdated", this.source.my_chat_member);
+	/** The context for the chat member in the update, if there is one. */
+	public chat_member = this.source.chat_member && this.client.contexts.getContext("ChatMemberUpdated", this.source.chat_member);
+	/** The context for the chat join request in the update, if there is one. */
+	public chat_join_request = this.source.chat_join_request && this.client.contexts.getContext("ChatJoinRequest", this.source.chat_join_request);
+}

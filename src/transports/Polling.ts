@@ -13,9 +13,9 @@ export class Polling extends EventTransport {
 
 	private async worker(params: IGetUpdatesParams = {}) {
 		try {
-			for (let update of await this.api.getUpdates(Object.assign(params, { allowed_updates: Object.keys(this.handler.handlers) }))) {
+			for (let update of await this.client.api.getUpdates(Object.assign(params, { allowed_updates: Object.keys(this.handler.handlers) }))) {
 				await this.handler.onUpdate(update);
-				params.offset = update.update_id+1;
+				params.offset = update.source.update_id+1;
 			}
 		} catch(error) {
 			console.error(error);

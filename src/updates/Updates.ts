@@ -1,18 +1,19 @@
-import { ICallbackQuery, IChatJoinRequest, IChatMemberUpdated, IChosenInlineResult, IInlineQuery, IMessage, IPoll, IPollAnswer, IPreCheckoutQuery, IShippingQuery, IUpdate, IUpdateName } from "../interfaces";
+import { ICallbackQuery, IChatJoinRequest, IChatMemberUpdated, IChosenInlineResult, IInlineQuery, IMessage, IPoll, IPollAnswer, IPreCheckoutQuery, IShippingQuery, IUpdateName } from "../interfaces";
 import { Evogram } from "../Client";
 import { Polling, Webhook } from "../transports";
+import { UpdateContext } from "../contexts";
 
-export type IUpdateHandler<T> = (data: T) => void;
+export type IUpdateHandler<T> = (data: T) => Promise<void> | void;
 
 export class Updates {
 	public polling: Polling;
 	public webhook: Webhook;
 
-	public handlers: { [updateName in IUpdateName]?: ((data: any) => void)[]} = {}
+	public handlers: { [updateName in IUpdateName]?: ((data: any) => Promise<void> | void)[]} = {}
 
-	constructor(private client: Evogram) {
-		this.polling = new Polling(client.api, this);
-		this.webhook = new Webhook(client.api, this);
+	constructor(client: Evogram) {
+		this.polling = new Polling(client, this);
+		this.webhook = new Webhook(client, this);
 	}
 
 	public on(update: "message" | "edited_message" | "channel_post" | "edited_channel_post", handler: IUpdateHandler<IMessage>): this;
@@ -30,8 +31,9 @@ export class Updates {
 		return this;
 	}
 
-	public async onUpdate(update: IUpdate) {
+	public async onUpdate(update: UpdateContext) {
+		if(!update.name || !this.handlers[update.name]) return;
 		//@ts-ignore
-		this.handlers[Object.keys(update)[1]]?.map(handler => handler(update[Object.keys(update)[1]]));
+		for(const handler of this.handlers[update.name]) await handler(update[update.name]);
 	}
 }
