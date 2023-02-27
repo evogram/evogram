@@ -9,8 +9,8 @@ export class Evogram {
 	public api: API;
 	public updates: Updates;
 
-	constructor(options: IEvogramParams) {
-		this.api = new API(options.token);
-		this.updates = new Updates(options.token);
+	constructor(public options: IEvogramParams) {
+		this.api = new API(this);
+		this.updates = new Updates(this);
 	}
 }
