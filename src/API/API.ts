@@ -514,42 +514,42 @@ export class API {
 	/**
 	 * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, higher level commands will be shown to affected users. Returns True on success.
 	 */
-	public deleteMyCommands(params: IDeleteMyCommandsParams): Promise<true> {
+	public deleteMyCommands(params?: IDeleteMyCommandsParams): Promise<true> {
 		return this.call("deleteMyCommands", params);
 	}
 
 	/**
 	 * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.
 	 */
-	public getMyCommands(params: IGetMyCommandsParams): Promise<IBotCommand[]> {
+	public getMyCommands(params?: IGetMyCommandsParams): Promise<IBotCommand[]> {
 		return this.call("getMyCommands", params);
 	}
 
 	/**
 	 * Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
 	 */
-	public setChatMenuButton(params: ISetChatMenuButtonParams): Promise<true> {
+	public setChatMenuButton(params?: ISetChatMenuButtonParams): Promise<true> {
 		return this.call("setChatMenuButton", params);
 	}
 
 	/**
 	 * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
 	 */
-	public getChatMenuButton(params: IGetChatMenuButtonParams): Promise<IMenuButton> {
+	public getChatMenuButton(params?: IGetChatMenuButtonParams): Promise<IMenuButton> {
 		return this.call("getChatMenuButton", params);
 	}
 
 	/**
 	 * Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success.
 	 */
-	public setMyDefaultAdministratorRights(params: ISetMyDefaultAdministratorRightsParams): Promise<true> {
+	public setMyDefaultAdministratorRights(params?: ISetMyDefaultAdministratorRightsParams): Promise<true> {
 		return this.call("setMyDefaultAdministratorRights", params);
 	}
 
 	/**
 	 * Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights on success.
 	 */
-	public getMyDefaultAdministratorRights(params: IGetMyDefaultAdministratorRightsParams): Promise<IChatAdministratorRights> {
+	public getMyDefaultAdministratorRights(params?: IGetMyDefaultAdministratorRightsParams): Promise<IChatAdministratorRights> {
 		return this.call("getMyDefaultAdministratorRights", params);
 	}
 
