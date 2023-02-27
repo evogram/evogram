@@ -1,5 +1,5 @@
 import { Evogram } from "../../Client";
-import { UpdateContext } from "../../contexts";
+import { BotContext, UpdateContext, UserContext } from "../../contexts";
 
 /** A class representing a ContextManager used to manage and manipulate contexts. */
 export class ContextManager {
@@ -11,7 +11,9 @@ export class ContextManager {
 
 	/** An object containing all the contexts. */
 	private contexts: { [key: string]: any } = {
-		"Update": UpdateContext
+		"Update": UpdateContext,
+		"User": UserContext,
+		"Bot": BotContext
 	};
   
 	/**
