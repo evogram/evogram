@@ -2,7 +2,7 @@ import axios from "axios";
 import { Evogram } from "../Client";
 import { TelegramError } from "./TelegramError";
 import { IAddStickerToSetParams, IAnswerCallbackQueryParams, IAnswerInlineQueryParams, IAnswerPreCheckoutQueryParams, IAnswerShippingQueryParams, IAnswerWebAppQueryParams, IApproveChatJoinRequestParams, IBanChatMemberParams, IBanChatSenderChatParams, IBotCommand, IChat, IChatAdministratorRights, IChatInviteLink, IChatMember, ICloseForumTopicParams, ICloseGeneralForumTopicParams, ICopyMessageParams, ICreateChatInviteLinkParams, ICreateForumTopicParams, ICreateInvoiceLinkParams, ICreateNewStickerSetParams, IDeclineChatJoinRequestParams, IDeleteChatPhotoParams, IDeleteChatStickerSetParams, IDeleteForumTopicParams, IDeleteMessageParams, IDeleteMyCommandsParams, IDeleteStickerFromSetParams, IDeleteWebhookParams, IEditChatInviteLinkParams, IEditForumTopicParams, IEditGeneralForumTopicParams, IEditMessageCaptionParams, IEditMessageLiveLocationParams, IEditMessageMediaParams, IEditMessageReplyMarkupParams, IEditMessageTextParams, IExportChatInviteLinkParams, IFile, IForumTopic, IForwardMessageParams, IGameHighScore, IGetChatAdministratorsParams, IGetChatMemberCountParams, IGetChatMemberParams, IGetChatMenuButtonParams, IGetChatParams, IGetCustomEmojiStickersParams, IGetFileParams, IGetForumTopicIconStickersParams, IGetGameHighScoresParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IGetStickerSetParams, IGetUpdatesParams, IGetUserProfilePhotosParams, IHideGeneralForumTopicParams, ILeaveChatParams, IMenuButton, IMessage, IMessageId, IPinChatMessageParams, IPromoteChatMemberParams, IReopenForumTopicParams, IReopenGeneralForumTopicParams, IRestrictChatMemberParams, IRevokeChatInviteLinkParams, ISendAnimationParams, ISendAudioParams, ISendChatActionParams, ISendContactParams, ISendDiceParams, ISendDocumentParams, ISendGameParams, ISendInvoiceParams, ISendLocationParams, ISendMediaGroupParams, ISendMessageParams, ISendPhotoParams, ISendPollParams, ISendStickerParams, ISendVenueParams, ISendVideoNoteParams, ISendVideoParams, ISendVoiceParams, ISentWebAppMessage, ISetChatAdministratorCustomTitleParams, ISetChatDescriptionParams, ISetChatMenuButtonParams, ISetChatPermissionsParams, ISetChatPhotoParams, ISetChatStickerSetParams, ISetChatTitleParams, ISetGameScoreParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams, ISetPassportDataErrorsParams, ISetStickerPositionInSetParams, ISetStickerSetThumbParams, ISetWebhookParams, ISticker, IStickerSet, IStopMessageLiveLocationParams, IStopPollParams, IUnbanChatMemberParams, IUnbanChatSenderChatParams, IUnhideGeneralForumTopicParams, IUnpinAllChatMessagesParams, IUnpinAllForumTopicMessagesParams, IUnpinChatMessageParams, IUpdate, IUploadStickerFileParams, IUserProfilePhotos, IWebhookInfo } from "../interfaces";
-import { ChatInviteLinkContext, PollContext, UpdateContext, UserContext } from "../contexts";
+import { ChatInviteLinkContext, DetailedChatContext, PollContext, UpdateContext, UserContext } from "../contexts";
 
 export class API {
 	private url: string;
@@ -395,10 +395,15 @@ export class API {
 	}
 
 	/**
-	 * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
+	 * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.).
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#getchat)
+	 * 
+	 * @param {IGetChatParams} params - The parameters for the API call.
+	 * @return {Promise} Returns a Chat object on success.
 	 */
-	public getChat(params: IGetChatParams): Promise<IChat> {
-		return this.call("getChat", params);
+	public async getChat<T extends object = DetailedChatContext>(params: IGetChatParams): Promise<T> {
+		return this.client.contexts.getContext<T>("DetailedChat", await this.call("getChat", params));
 	}
 
 	/**

@@ -1,5 +1,5 @@
 import { Evogram } from "../../Client";
-import { BotContext, ChatInviteLinkContext, ContactContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
+import { BotContext, ChatContext, ChatInviteLinkContext, ContactContext, DetailedChatContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
 
 /** A class representing a ContextManager used to manage and manipulate contexts. */
 export class ContextManager {
@@ -20,6 +20,8 @@ export class ContextManager {
 		"PreCheckoutQuery": PreCheckoutQueryContext,
 		"ShippingQuery": ShippingQueryContext,
 		"Contact": ContactContext,
+		"Chat": ChatContext,
+		"DetailedChat": DetailedChatContext,
 		"ChatInviteLink": ChatInviteLinkContext
 	};
   
