@@ -1,7 +1,7 @@
 import { ICallbackQuery, IChatJoinRequest, IChatMemberUpdated, IChosenInlineResult, IInlineQuery, IMessage, IPoll, IPollAnswer, IPreCheckoutQuery, IShippingQuery, IUpdateName } from "../interfaces";
 import { Evogram } from "../Client";
 import { Polling, Webhook } from "../transports";
-import { UpdateContext } from "../contexts";
+import { PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext } from "../contexts";
 
 export type IUpdateHandler<T> = (data: T) => Promise<void> | void;
 
@@ -20,10 +20,10 @@ export class Updates {
 	public on(update: "inline_query", handler: IUpdateHandler<IInlineQuery>): this;
 	public on(update: "chosen_inline_result", handler: IUpdateHandler<IChosenInlineResult>): this;
 	public on(update: "callback_query", handler: IUpdateHandler<ICallbackQuery>): this;
-	public on(update: "shipping_query", handler: IUpdateHandler<IShippingQuery>): this;
-	public on(update: "pre_checkout_query", handler: IUpdateHandler<IPreCheckoutQuery>): this;
-	public on(update: "poll", handler: IUpdateHandler<IPoll>): this;
-	public on(update: "poll_answer", handler: IUpdateHandler<IPollAnswer>): this;
+	public on(update: "shipping_query", handler: IUpdateHandler<ShippingQueryContext>): this;
+	public on(update: "pre_checkout_query", handler: IUpdateHandler<PreCheckoutQueryContext>): this;
+	public on(update: "poll", handler: IUpdateHandler<PollContext>): this;
+	public on(update: "poll_answer", handler: IUpdateHandler<PollAnswerContext>): this;
 	public on(update: "my_chat_member" | "chat_member", handler: IUpdateHandler<IChatMemberUpdated>): this;
 	public on(update: "chat_join_request", handler: IUpdateHandler<IChatJoinRequest>): this;
 	public on(update: IUpdateName, handler: (data: any) => void): this {
