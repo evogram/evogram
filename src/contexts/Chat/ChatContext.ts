@@ -1,6 +1,6 @@
-import { IChat, ICreateChatInviteLinkParams, IInputFile } from "../../interfaces";
+import { IChat, IChatInviteLink, ICreateChatInviteLinkParams, IInputFile } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { ChatInviteLinkContext } from "./ChatInviteLink";
+import { ChatInviteLinkContext } from "./ChatInviteLinkContext";
 import { DetailedChatContext } from "./DetailedChatContext";
 
 export class ChatContext extends Context<IChat> {
@@ -27,8 +27,8 @@ export class ChatContext extends Context<IChat> {
 	 * @param [params] Optional parameters for creating the invite link.
 	 * @returns A Promise that resolves to the new invite link.
 	 */
-	public createInviteLink<T extends object = ChatInviteLinkContext>(params?: Partial<ICreateChatInviteLinkParams>): Promise<T> {
-		return this.client.api.createChatInviteLink({ chat_id: this.source.id, ...params });
+	public createInviteLink<T extends Context<IChatInviteLink> = ChatInviteLinkContext>(params?: Partial<ICreateChatInviteLinkParams>) {
+		return this.client.api.createChatInviteLink<T>({ chat_id: this.source.id, ...params });
 	}
 
 	/**
@@ -66,11 +66,9 @@ export class ChatContext extends Context<IChat> {
 		return this.client.api.leaveChat({ chat_id: this.source.id });
 	}
 
-	#detailedChat: any = null;
-	public async getChat<T extends object = DetailedChatContext>(): Promise<T> {
-		if(this.#detailedChat) return this.#detailedChat;
-
-		this.#detailedChat = await this.client.api.getChat({ chat_id: this.source.id });
+	#detailedChat: any;
+	public async getChat<T extends Context<IChat> = DetailedChatContext>(): Promise<T> {
+		if(!this.#detailedChat) this.#detailedChat = await this.client.api.getChat({ chat_id: this.source.id });
 		return this.#detailedChat;
 	}
 }

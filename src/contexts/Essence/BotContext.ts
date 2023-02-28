@@ -1,4 +1,5 @@
-import { IBotCommand, IDeleteMyCommandsParams, IGetChatMenuButtonParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, ISetChatMenuButtonParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams } from "../../interfaces";
+import { IBotCommand, IChatAdministratorRights, IDeleteMyCommandsParams, IGetChatMenuButtonParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IMenuButton, ISetChatMenuButtonParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams } from "../../interfaces";
+import { Context } from "../../modules/context";
 import { UserContext } from "./UserContext";
 
 export class BotContext extends UserContext {
@@ -7,8 +8,8 @@ export class BotContext extends UserContext {
 	 * @param params Optional parameters to customize the behavior of the method.
 	 * @returns A Promise that resolves to the current list of the bot's commands.
 	 */
-	public getCommands(params?: IGetMyCommandsParams) {
-		return this.client.api.getMyCommands(params);
+	public getCommands<T extends Context<IBotCommand> | object = IBotCommand>(params?: IGetMyCommandsParams) {
+		return this.client.api.getMyCommands<T>(params);
 	}
 
 	/**
@@ -56,8 +57,8 @@ export class BotContext extends UserContext {
 	 * @param params Optional parameters to customize the behavior of the method.
 	 * @returns A Promise that resolves to the bot's menu button for the specified chat.
 	 */
-	public getChatMenuButton(params?: IGetChatMenuButtonParams) {
-		return this.client.api.getChatMenuButton(params);
+	public getChatMenuButton<T extends Context<IMenuButton> | object = IMenuButton>(params?: IGetChatMenuButtonParams) {
+		return this.client.api.getChatMenuButton<T>(params);
 	}
 
 	/**
@@ -74,7 +75,7 @@ export class BotContext extends UserContext {
 	 * @param params Optional parameters to customize the behavior of the method.
 	 * @returns A Promise that resolves to the bot's default administrator rights.
 	 */
-	public getDefaultAdministratorRights(params?: IGetMyDefaultAdministratorRightsParams) {
-		return this.client.api.getMyDefaultAdministratorRights(params);
+	public getDefaultAdministratorRights<T extends Context<IChatAdministratorRights> | object = IChatAdministratorRights>(params?: IGetMyDefaultAdministratorRightsParams) {
+		return this.client.api.getMyDefaultAdministratorRights<T>(params);
 	}
 }

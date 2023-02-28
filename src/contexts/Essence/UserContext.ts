@@ -39,12 +39,12 @@ export class UserContext extends Context<IUser & { chat_id?: number | string }> 
 		return this.client.api.getUserProfilePhotos({ user_id: this.source.id, ...params });
 	}
 
-	#member: IChatMember | null = null;
+	#member: any;
 	/**
 	 * Gets the user's chat member object.
 	 * @returns The chat member object or null if the user is not a member of a chat.
 	*/
-	public async getMember() {
+	public async getMember<T extends Context<IChatMember> | object = IChatMember>(): Promise<T | null> {
 		if(!this.source.chat_id) return null;
 
 		if(!this.#member) this.#member = await this.client.api.getChatMember({ chat_id: this.source.chat_id, user_id: this.source.id });

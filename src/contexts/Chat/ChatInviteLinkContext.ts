@@ -25,12 +25,12 @@ export class ChatInviteLinkContext extends Context<IChatInviteLink & { chat_id: 
 
 
 	/** Edits the chat invite link. */
-	public edit<T extends object = ChatInviteLinkContext>(params: Partial<IEditChatInviteLinkParams>): Promise<T> {
-		return this.client.api.editChatInviteLink(Object.assign({ chat_id: this.source.chat_id, invite_link: this.source.invite_link }, params));
+	public edit<T extends Context<IChatInviteLink> = ChatInviteLinkContext>(params: Partial<IEditChatInviteLinkParams>) {
+		return this.client.api.editChatInviteLink<T>(Object.assign({ chat_id: this.source.chat_id, invite_link: this.source.invite_link }, params));
 	}
 
 	/** Revokes the chat invite link. */
-	public revoke<T extends object = ChatInviteLinkContext>(): Promise<T> {
-		return this.client.api.revokeChatInviteLink({ chat_id: this.source.chat_id, invite_link: this.source.invite_link });
+	public revoke<T extends Context<IChatInviteLink> = ChatInviteLinkContext>() {
+		return this.client.api.revokeChatInviteLink<T>({ chat_id: this.source.chat_id, invite_link: this.source.invite_link });
 	}
 }

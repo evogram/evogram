@@ -7,7 +7,7 @@ export class PollContext extends Context<IPoll> {
 	/** Gets the question text of the poll. */
 	public get question() { return this.source.question }
 	/** Gets the list of poll options. */
-	public get options() { return this.client.contexts.getContext<IPollOption>("PollOptions", this.source.options) }
+	public get options() { return this.source.options.map(option => this.client.contexts.getContext<IPollOption>("PollOption", option)) }
 	/** Gets the total number of users that voted in the poll. */
 	public get totalVoterCount() { return this.source.total_voter_count }
 	/** Returns true if the poll is closed. */
@@ -33,8 +33,9 @@ export class PollContext extends Context<IPoll> {
 	 * @param text Parameter specifies the text to search for.
 	 * @returns The found poll option.
 	 */
-	public getPollOptionByText(text: string) {
-		return this.source.options.find((option) => option.text === text);
+	public getPollOptionByText<T extends Context<IPollOption> = any>(text: string) {
+		const findResult = this.source.options.find((option) => option.text === text);
+		return findResult ? this.client.contexts.getContext<T>("PollOption", findResult) : undefined;
 	}
 
 	/**

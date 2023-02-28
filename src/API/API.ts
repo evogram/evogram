@@ -1,8 +1,9 @@
 import axios from "axios";
 import { Evogram } from "../Client";
 import { TelegramError } from "./TelegramError";
-import { IAddStickerToSetParams, IAnswerCallbackQueryParams, IAnswerInlineQueryParams, IAnswerPreCheckoutQueryParams, IAnswerShippingQueryParams, IAnswerWebAppQueryParams, IApproveChatJoinRequestParams, IBanChatMemberParams, IBanChatSenderChatParams, IBotCommand, IChat, IChatAdministratorRights, IChatInviteLink, IChatMember, ICloseForumTopicParams, ICloseGeneralForumTopicParams, ICopyMessageParams, ICreateChatInviteLinkParams, ICreateForumTopicParams, ICreateInvoiceLinkParams, ICreateNewStickerSetParams, IDeclineChatJoinRequestParams, IDeleteChatPhotoParams, IDeleteChatStickerSetParams, IDeleteForumTopicParams, IDeleteMessageParams, IDeleteMyCommandsParams, IDeleteStickerFromSetParams, IDeleteWebhookParams, IEditChatInviteLinkParams, IEditForumTopicParams, IEditGeneralForumTopicParams, IEditMessageCaptionParams, IEditMessageLiveLocationParams, IEditMessageMediaParams, IEditMessageReplyMarkupParams, IEditMessageTextParams, IExportChatInviteLinkParams, IFile, IForumTopic, IForwardMessageParams, IGameHighScore, IGetChatAdministratorsParams, IGetChatMemberCountParams, IGetChatMemberParams, IGetChatMenuButtonParams, IGetChatParams, IGetCustomEmojiStickersParams, IGetFileParams, IGetForumTopicIconStickersParams, IGetGameHighScoresParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IGetStickerSetParams, IGetUpdatesParams, IGetUserProfilePhotosParams, IHideGeneralForumTopicParams, ILeaveChatParams, IMenuButton, IMessage, IMessageId, IPinChatMessageParams, IPromoteChatMemberParams, IReopenForumTopicParams, IReopenGeneralForumTopicParams, IRestrictChatMemberParams, IRevokeChatInviteLinkParams, ISendAnimationParams, ISendAudioParams, ISendChatActionParams, ISendContactParams, ISendDiceParams, ISendDocumentParams, ISendGameParams, ISendInvoiceParams, ISendLocationParams, ISendMediaGroupParams, ISendMessageParams, ISendPhotoParams, ISendPollParams, ISendStickerParams, ISendVenueParams, ISendVideoNoteParams, ISendVideoParams, ISendVoiceParams, ISentWebAppMessage, ISetChatAdministratorCustomTitleParams, ISetChatDescriptionParams, ISetChatMenuButtonParams, ISetChatPermissionsParams, ISetChatPhotoParams, ISetChatStickerSetParams, ISetChatTitleParams, ISetGameScoreParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams, ISetPassportDataErrorsParams, ISetStickerPositionInSetParams, ISetStickerSetThumbParams, ISetWebhookParams, ISticker, IStickerSet, IStopMessageLiveLocationParams, IStopPollParams, IUnbanChatMemberParams, IUnbanChatSenderChatParams, IUnhideGeneralForumTopicParams, IUnpinAllChatMessagesParams, IUnpinAllForumTopicMessagesParams, IUnpinChatMessageParams, IUpdate, IUploadStickerFileParams, IUserProfilePhotos, IWebhookInfo } from "../interfaces";
+import { IAddStickerToSetParams, IAnswerCallbackQueryParams, IAnswerInlineQueryParams, IAnswerPreCheckoutQueryParams, IAnswerShippingQueryParams, IAnswerWebAppQueryParams, IApproveChatJoinRequestParams, IBanChatMemberParams, IBanChatSenderChatParams, IBotCommand, IChat, IChatAdministratorRights, IChatInviteLink, IChatMember, ICloseForumTopicParams, ICloseGeneralForumTopicParams, ICopyMessageParams, ICreateChatInviteLinkParams, ICreateForumTopicParams, ICreateInvoiceLinkParams, ICreateNewStickerSetParams, IDeclineChatJoinRequestParams, IDeleteChatPhotoParams, IDeleteChatStickerSetParams, IDeleteForumTopicParams, IDeleteMessageParams, IDeleteMyCommandsParams, IDeleteStickerFromSetParams, IDeleteWebhookParams, IEditChatInviteLinkParams, IEditForumTopicParams, IEditGeneralForumTopicParams, IEditMessageCaptionParams, IEditMessageLiveLocationParams, IEditMessageMediaParams, IEditMessageReplyMarkupParams, IEditMessageTextParams, IExportChatInviteLinkParams, IFile, IForumTopic, IForwardMessageParams, IGameHighScore, IGetChatAdministratorsParams, IGetChatMemberCountParams, IGetChatMemberParams, IGetChatMenuButtonParams, IGetChatParams, IGetCustomEmojiStickersParams, IGetFileParams, IGetForumTopicIconStickersParams, IGetGameHighScoresParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IGetStickerSetParams, IGetUpdatesParams, IGetUserProfilePhotosParams, IHideGeneralForumTopicParams, ILeaveChatParams, IMenuButton, IMessage, IMessageId, IPinChatMessageParams, IPoll, IPromoteChatMemberParams, IReopenForumTopicParams, IReopenGeneralForumTopicParams, IRestrictChatMemberParams, IRevokeChatInviteLinkParams, ISendAnimationParams, ISendAudioParams, ISendChatActionParams, ISendContactParams, ISendDiceParams, ISendDocumentParams, ISendGameParams, ISendInvoiceParams, ISendLocationParams, ISendMediaGroupParams, ISendMessageParams, ISendPhotoParams, ISendPollParams, ISendStickerParams, ISendVenueParams, ISendVideoNoteParams, ISendVideoParams, ISendVoiceParams, ISentWebAppMessage, ISetChatAdministratorCustomTitleParams, ISetChatDescriptionParams, ISetChatMenuButtonParams, ISetChatPermissionsParams, ISetChatPhotoParams, ISetChatStickerSetParams, ISetChatTitleParams, ISetGameScoreParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams, ISetPassportDataErrorsParams, ISetStickerPositionInSetParams, ISetStickerSetThumbParams, ISetWebhookParams, ISticker, IStickerSet, IStopMessageLiveLocationParams, IStopPollParams, IUnbanChatMemberParams, IUnbanChatSenderChatParams, IUnhideGeneralForumTopicParams, IUnpinAllChatMessagesParams, IUnpinAllForumTopicMessagesParams, IUnpinChatMessageParams, IUpdate, IUploadStickerFileParams, IUser, IUserProfilePhotos, IWebhookInfo } from "../interfaces";
 import { ChatInviteLinkContext, DetailedChatContext, PollContext, UpdateContext, UserContext } from "../contexts";
+import { Context } from "../modules/context";
 
 export class API {
 	private url: string;
@@ -56,8 +57,8 @@ export class API {
 	 * 
 	 * @returns {Promise<T>} A Promise that resolves with an object of type T, which defaults to UserContext.
 	 */
-	public async getMe<T extends object = UserContext>(): Promise<T> {
-		return this.client.contexts.getContext<T>("Bot", await this.call("getMe"));
+	public async getMe<T extends Context<IUser> = UserContext>(): Promise<T> {
+		return this.client.contexts.getContext("Bot", await this.call("getMe"));
 	}
 
 	/**
@@ -295,8 +296,8 @@ export class API {
 	 * @param {ICreateChatInviteLinkParams} params - Parameters for creating the chat invite link.
 	 * @returns {Promise<ChatInviteLinkContext>} A promise that resolves to a ChatInviteLinkContext object representing the new invite link.
 	 */
-	public async createChatInviteLink<T extends object = ChatInviteLinkContext>(params: ICreateChatInviteLinkParams): Promise<T> {
-		return this.client.contexts.getContext<T>("ChatInviteLink", await this.call("createChatInviteLink", params));
+	public async createChatInviteLink<T extends Context<IChatInviteLink> = ChatInviteLinkContext>(params: ICreateChatInviteLinkParams): Promise<T> {
+		return this.client.contexts.getContext("ChatInviteLink", await this.call("createChatInviteLink", params));
 	}
 
 	/**
@@ -307,8 +308,8 @@ export class API {
 	 * @param {IEditChatInviteLinkParams} params - Parameters for editing the chat invite link.
 	 * @returns {Promise<ChatInviteLinkContext>} A promise that resolves to a ChatInviteLinkContext object representing the edited chat invite link.
 	 */
-	public async editChatInviteLink<T extends object = ChatInviteLinkContext>(params: IEditChatInviteLinkParams): Promise<T> {
-		return this.client.contexts.getContext<T>("ChatInviteLink", await this.call("editChatInviteLink", params));
+	public async editChatInviteLink<T extends Context<IChatInviteLink> = ChatInviteLinkContext>(params: IEditChatInviteLinkParams): Promise<T> {
+		return this.client.contexts.getContext("ChatInviteLink", await this.call("editChatInviteLink", params));
 	}
 
 	/**
@@ -320,8 +321,8 @@ export class API {
 	 * @param {IRevokeChatInviteLinkParams} params - Parameters for the revokeChatInviteLink method.
 	 * @returns {Promise<ChatInviteLinkContext>} A promise that resolves to a ChatInviteLinkContext object representing the revoked link.
 	 */
-	public async revokeChatInviteLink<T extends object = ChatInviteLinkContext>(params: IRevokeChatInviteLinkParams): Promise<T> {
-		return this.client.contexts.getContext<T>("ChatInviteLink", await this.call("revokeChatInviteLink", params));
+	public async revokeChatInviteLink<T extends Context<IChatInviteLink> = ChatInviteLinkContext>(params: IRevokeChatInviteLinkParams): Promise<T> {
+		return this.client.contexts.getContext("ChatInviteLink", await this.call("revokeChatInviteLink", params));
 	}
 
 	/**
@@ -402,8 +403,8 @@ export class API {
 	 * @param {IGetChatParams} params - The parameters for the API call.
 	 * @return {Promise} Returns a Chat object on success.
 	 */
-	public async getChat<T extends object = DetailedChatContext>(params: IGetChatParams): Promise<T> {
-		return this.client.contexts.getContext<T>("DetailedChat", await this.call("getChat", params));
+	public async getChat<T extends Context<IChat> = DetailedChatContext>(params: IGetChatParams): Promise<T> {
+		return this.client.contexts.getContext("DetailedChat", await this.call("getChat", params));
 	}
 
 	/**
@@ -547,10 +548,12 @@ export class API {
 	}
 
 	/**
-	 * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.
+	 * Use this method to get the current list of the bot's commands for the given scope and user language. 
+	 * Returns an Array of BotCommand objects. 
+	 * If commands aren't set, an empty list is returned.
 	 */
-	public getMyCommands(params?: IGetMyCommandsParams): Promise<IBotCommand[]> {
-		return this.call("getMyCommands", params);
+	public async getMyCommands<T extends Context<IBotCommand> | object = IBotCommand>(params?: IGetMyCommandsParams): Promise<T[]> {
+		return (await this.call("getMyCommands", params)).map((command: IBotCommand) => this.client.contexts.getContext("BotCommand", command));
 	}
 
 	/**
@@ -561,10 +564,11 @@ export class API {
 	}
 
 	/**
-	 * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
+	 * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. 
+	 * Returns MenuButton on success.
 	 */
-	public getChatMenuButton(params?: IGetChatMenuButtonParams): Promise<IMenuButton> {
-		return this.call("getChatMenuButton", params);
+	public async getChatMenuButton<T extends Context<IMenuButton> | object = IMenuButton>(params?: IGetChatMenuButtonParams): Promise<T> {
+		return this.client.contexts.getContext("MenuButton", await this.call("getChatMenuButton", params));
 	}
 
 	/**
@@ -575,9 +579,10 @@ export class API {
 	}
 
 	/**
-	 * Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights on success.
+	 * Use this method to get the current default administrator rights of the bot. 
+	 * Returns ChatAdministratorRights on success.
 	 */
-	public getMyDefaultAdministratorRights(params?: IGetMyDefaultAdministratorRightsParams): Promise<IChatAdministratorRights> {
+	public async getMyDefaultAdministratorRights<T extends Context<IChatAdministratorRights> | object = IChatAdministratorRights>(params?: IGetMyDefaultAdministratorRightsParams): Promise<T> {
 		return this.call("getMyDefaultAdministratorRights", params);
 	}
 
@@ -618,8 +623,8 @@ export class API {
 	 * @param {IStopPollParams} params - The parameters for stopping the poll.
 	 * @returns {Promise<PollContext>} A Promise that resolves to a PollContext object representing the stopped poll.
 	 */
-	public async stopPoll<T extends object = PollContext>(params: IStopPollParams): Promise<T> {
-		return this.client.contexts.getContext<T>("Poll", await this.call("stopPoll", params));
+	public async stopPoll<T extends Context<IPoll> = PollContext>(params: IStopPollParams): Promise<T> {
+		return this.client.contexts.getContext("Poll", await this.call("stopPoll", params));
 	}
 
 	/**
