@@ -2,7 +2,7 @@ import axios from "axios";
 import { Evogram } from "../Client";
 import { TelegramError } from "./TelegramError";
 import { IAddStickerToSetParams, IAnswerCallbackQueryParams, IAnswerInlineQueryParams, IAnswerPreCheckoutQueryParams, IAnswerShippingQueryParams, IAnswerWebAppQueryParams, IApproveChatJoinRequestParams, IBanChatMemberParams, IBanChatSenderChatParams, IBotCommand, IChat, IChatAdministratorRights, IChatInviteLink, IChatMember, ICloseForumTopicParams, ICloseGeneralForumTopicParams, ICopyMessageParams, ICreateChatInviteLinkParams, ICreateForumTopicParams, ICreateInvoiceLinkParams, ICreateNewStickerSetParams, IDeclineChatJoinRequestParams, IDeleteChatPhotoParams, IDeleteChatStickerSetParams, IDeleteForumTopicParams, IDeleteMessageParams, IDeleteMyCommandsParams, IDeleteStickerFromSetParams, IDeleteWebhookParams, IEditChatInviteLinkParams, IEditForumTopicParams, IEditGeneralForumTopicParams, IEditMessageCaptionParams, IEditMessageLiveLocationParams, IEditMessageMediaParams, IEditMessageReplyMarkupParams, IEditMessageTextParams, IExportChatInviteLinkParams, IFile, IForumTopic, IForwardMessageParams, IGameHighScore, IGetChatAdministratorsParams, IGetChatMemberCountParams, IGetChatMemberParams, IGetChatMenuButtonParams, IGetChatParams, IGetCustomEmojiStickersParams, IGetFileParams, IGetForumTopicIconStickersParams, IGetGameHighScoresParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IGetStickerSetParams, IGetUpdatesParams, IGetUserProfilePhotosParams, IHideGeneralForumTopicParams, ILeaveChatParams, IMenuButton, IMessage, IMessageId, IPinChatMessageParams, IPromoteChatMemberParams, IReopenForumTopicParams, IReopenGeneralForumTopicParams, IRestrictChatMemberParams, IRevokeChatInviteLinkParams, ISendAnimationParams, ISendAudioParams, ISendChatActionParams, ISendContactParams, ISendDiceParams, ISendDocumentParams, ISendGameParams, ISendInvoiceParams, ISendLocationParams, ISendMediaGroupParams, ISendMessageParams, ISendPhotoParams, ISendPollParams, ISendStickerParams, ISendVenueParams, ISendVideoNoteParams, ISendVideoParams, ISendVoiceParams, ISentWebAppMessage, ISetChatAdministratorCustomTitleParams, ISetChatDescriptionParams, ISetChatMenuButtonParams, ISetChatPermissionsParams, ISetChatPhotoParams, ISetChatStickerSetParams, ISetChatTitleParams, ISetGameScoreParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams, ISetPassportDataErrorsParams, ISetStickerPositionInSetParams, ISetStickerSetThumbParams, ISetWebhookParams, ISticker, IStickerSet, IStopMessageLiveLocationParams, IStopPollParams, IUnbanChatMemberParams, IUnbanChatSenderChatParams, IUnhideGeneralForumTopicParams, IUnpinAllChatMessagesParams, IUnpinAllForumTopicMessagesParams, IUnpinChatMessageParams, IUpdate, IUploadStickerFileParams, IUserProfilePhotos, IWebhookInfo } from "../interfaces";
-import { PollContext, UpdateContext, UserContext } from "../contexts";
+import { ChatInviteLinkContext, PollContext, UpdateContext, UserContext } from "../contexts";
 
 export class API {
 	private url: string;
@@ -287,24 +287,41 @@ export class API {
 	}
 
 	/**
-	 * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
+	 * Use this method to create an additional invite link for a chat. 
+	 * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. 
+	 * The link can be revoked using the method revokeChatInviteLink. 
+	 * Returns the new invite link as ChatInviteLink object.
+	 * 
+	 * @param {ICreateChatInviteLinkParams} params - Parameters for creating the chat invite link.
+	 * @returns {Promise<ChatInviteLinkContext>} A promise that resolves to a ChatInviteLinkContext object representing the new invite link.
 	 */
-	public createChatInviteLink(params: ICreateChatInviteLinkParams): Promise<IChatInviteLink> {
-		return this.call("createChatInviteLink", params);
+	public async createChatInviteLink<T extends object = ChatInviteLinkContext>(params: ICreateChatInviteLinkParams): Promise<T> {
+		return this.client.contexts.getContext<T>("ChatInviteLink", await this.call("createChatInviteLink", params));
 	}
 
 	/**
-	 * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
+	 * Use this method to edit a non-primary invite link created by the bot. 
+	 * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. 
+	 * Returns the edited invite link as a ChatInviteLink object.
+	 * 
+	 * @param {IEditChatInviteLinkParams} params - Parameters for editing the chat invite link.
+	 * @returns {Promise<ChatInviteLinkContext>} A promise that resolves to a ChatInviteLinkContext object representing the edited chat invite link.
 	 */
-	public editChatInviteLink(params: IEditChatInviteLinkParams): Promise<IChatInviteLink> {
-		return this.call("editChatInviteLink", params);
+	public async editChatInviteLink<T extends object = ChatInviteLinkContext>(params: IEditChatInviteLinkParams): Promise<T> {
+		return this.client.contexts.getContext<T>("ChatInviteLink", await this.call("editChatInviteLink", params));
 	}
 
 	/**
-	 * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
+	 * Use this method to revoke an invite link created by the bot. 
+	 * If the primary link is revoked, a new link is automatically generated. 
+	 * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. 
+	 * Returns the revoked invite link as ChatInviteLink object.
+	 * 
+	 * @param {IRevokeChatInviteLinkParams} params - Parameters for the revokeChatInviteLink method.
+	 * @returns {Promise<ChatInviteLinkContext>} A promise that resolves to a ChatInviteLinkContext object representing the revoked link.
 	 */
-	public revokeChatInviteLink(params: IRevokeChatInviteLinkParams): Promise<IChatInviteLink> {
-		return this.call("revokeChatInviteLink", params);
+	public async revokeChatInviteLink<T extends object = ChatInviteLinkContext>(params: IRevokeChatInviteLinkParams): Promise<T> {
+		return this.client.contexts.getContext<T>("ChatInviteLink", await this.call("revokeChatInviteLink", params));
 	}
 
 	/**
