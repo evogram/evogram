@@ -4,19 +4,19 @@ import { getCountryWithCode } from "../../utils";
 
 export class UserContext extends Context<IUser & { chat_id?: number | string }> {
 	/** Returns the user's ID. */
-	public get id() { return this.source.id }
+	public get id() { return this._source.id }
 	/** Returns the user's first name. */
-	public get firstname() { return this.source.first_name }
+	public get firstname() { return this._source.first_name }
 	/** Returns the user's last name. */
-	public get lastname() { return this.source.last_name }
+	public get lastname() { return this._source.last_name }
 	/** Returns the user's username. */
-	public get username() { return this.source.username }
+	public get username() { return this._source.username }
 	/** Returns whether the user is a bot. */
-	public get isBot() { return this.source.is_bot }
+	public get isBot() { return this._source.is_bot }
 	/** Returns whether the user is a premium user. */
-	public get isPremium() { return this.source.is_premium }
+	public get isPremium() { return this._source.is_premium }
 	/** Returns the user's language code and country. */
-	public get language() { return this.source.language_code && { code: this.source.language_code, country: getCountryWithCode(this.source.language_code) } }
+	public get language() { return this._source.language_code && { code: this._source.language_code, country: getCountryWithCode(this._source.language_code) } }
 
 
 	/** Returns the user's appeal, which is either their username or full name. */
@@ -26,7 +26,7 @@ export class UserContext extends Context<IUser & { chat_id?: number | string }> 
 
 	/** Returns the user's full name. */
 	public get fullname() {
-		return [this.source.first_name, this.source.last_name].join(" ").trimEnd();
+		return [this._source.first_name, this._source.last_name].join(" ").trimEnd();
 	}
 
 
@@ -36,7 +36,7 @@ export class UserContext extends Context<IUser & { chat_id?: number | string }> 
 	 * @returns The API response.
 	 */
 	public getProfilePhotos(params?: Partial<IGetUserProfilePhotosParams>) {
-		return this.client.api.getUserProfilePhotos({ user_id: this.source.id, ...params });
+		return this.client.api.getUserProfilePhotos({ user_id: this._source.id, ...params });
 	}
 
 	#member: any;
@@ -45,9 +45,9 @@ export class UserContext extends Context<IUser & { chat_id?: number | string }> 
 	 * @returns The chat member object or null if the user is not a member of a chat.
 	*/
 	public async getMember<T extends Context<IChatMember> | object = IChatMember>(): Promise<T | null> {
-		if(!this.source.chat_id) return null;
+		if(!this._source.chat_id) return null;
 
-		if(!this.#member) this.#member = await this.client.api.getChatMember({ chat_id: this.source.chat_id, user_id: this.source.id });
+		if(!this.#member) this.#member = await this.client.api.getChatMember({ chat_id: this._source.chat_id, user_id: this._source.id });
 		return this.#member;
 	}
 }

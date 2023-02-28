@@ -5,13 +5,13 @@ import { DetailedChatContext } from "./DetailedChatContext";
 
 export class ChatContext extends Context<IChat> {
 	/** The ID of the chat. */
-	public get id() { return this.source.id }
+	public get id() { return this._source.id }
 	/** The type of the chat. */
-	public get type() { return this.source.type }
+	public get type() { return this._source.type }
 	/** The title of the chat, or its username, or the concatenation of its first_name and last_name. */
-	public get title() { return this.source.title || this.source.username || [this.source.first_name, this.source.last_name].join(" ").trimEnd() }
+	public get title() { return this._source.title || this._source.username || [this._source.first_name, this._source.last_name].join(" ").trimEnd() }
 	/** Whether the chat is a forum. */
-	public get isForum() { return this.source.is_forum }
+	public get isForum() { return this._source.is_forum }
 
 
 	/**
@@ -19,7 +19,7 @@ export class ChatContext extends Context<IChat> {
 	 * @returns A Promise that resolves to the invite link.
 	 */
 	public exportInviteLink() {
-		return this.client.api.exportChatInviteLink({ chat_id: this.source.id });
+		return this.client.api.exportChatInviteLink({ chat_id: this._source.id });
 	}
 
 	/**
@@ -28,7 +28,7 @@ export class ChatContext extends Context<IChat> {
 	 * @returns A Promise that resolves to the new invite link.
 	 */
 	public createInviteLink<T extends Context<IChatInviteLink> = ChatInviteLinkContext>(params?: Partial<ICreateChatInviteLinkParams>) {
-		return this.client.api.createChatInviteLink<T>({ chat_id: this.source.id, ...params });
+		return this.client.api.createChatInviteLink<T>({ chat_id: this._source.id, ...params });
 	}
 
 	/**
@@ -37,7 +37,7 @@ export class ChatContext extends Context<IChat> {
 	 * @returns A Promise that resolves to true if the photo was successfully set.
 	 */
 	public setPhoto(photo: IInputFile) {
-		return this.client.api.setChatPhoto({ chat_id: this.source.id, photo });
+		return this.client.api.setChatPhoto({ chat_id: this._source.id, photo });
 	}
 
 	/**
@@ -46,7 +46,7 @@ export class ChatContext extends Context<IChat> {
 	 * @returns A Promise that resolves to true if the title was successfully set.
 	 */
 	public setTitle(title: string) {
-		return this.client.api.setChatTitle({ chat_id: this.source.id, title });
+		return this.client.api.setChatTitle({ chat_id: this._source.id, title });
 	}
 
 	/**
@@ -55,7 +55,7 @@ export class ChatContext extends Context<IChat> {
 	 * @returns A Promise that resolves to true if the description was successfully set.
 	 */
 	public setDescription(description?: string) {
-		return this.client.api.setChatDescription({ chat_id: this.source.id, description });
+		return this.client.api.setChatDescription({ chat_id: this._source.id, description });
 	}
 
 	/**
@@ -63,12 +63,12 @@ export class ChatContext extends Context<IChat> {
 	 * @returns A Promise that resolves to true if the chat was successfully left.
 	 */
 	public leave() {
-		return this.client.api.leaveChat({ chat_id: this.source.id });
+		return this.client.api.leaveChat({ chat_id: this._source.id });
 	}
 
 	#detailedChat: any;
 	public async getChat<T extends Context<IChat> = DetailedChatContext>(): Promise<T> {
-		if(!this.#detailedChat) this.#detailedChat = await this.client.api.getChat({ chat_id: this.source.id });
+		if(!this.#detailedChat) this.#detailedChat = await this.client.api.getChat({ chat_id: this._source.id });
 		return this.#detailedChat;
 	}
 }

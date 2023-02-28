@@ -6,18 +6,18 @@ import { ChatInviteLinkContext } from "./ChatInviteLinkContext";
 
 export class ChatJoinRequestContext extends Context<IChatJoinRequest> {
 	/** The chat the join request was sent to. */
-	public chat = this.client.contexts.getContext<ChatContext>("Chat", this.source.chat);
+	public chat = this.client.contexts.getContext<ChatContext>("Chat", this._source.chat);
 	/** The user who sent the join request. */
-	public user = this.client.contexts.getContext<UserContext>("User", this.source.from);
+	public user = this.client.contexts.getContext<UserContext>("User", this._source.from);
 	/** The invite link used to send the join request. Undefined if no invite link was used. */
-	public link = this.source.invite_link && this.client.contexts.getContext<ChatInviteLinkContext>("ChatInviteLink", Object.assign(this.source.invite_link, { chat_id: this.source.chat.id }));
+	public link = this._source.invite_link && this.client.contexts.getContext<ChatInviteLinkContext>("ChatInviteLink", Object.assign(this._source.invite_link, { chat_id: this._source.chat.id }));
 	/** The date when the join request was sent. */
-	public date = new Date(this.source.date);
+	public date = new Date(this._source.date);
 
 	/** Returns the ID of the user in the chat. */
-	public get userChatID() { return this.source.user_chat_id }
+	public get userChatID() { return this._source.user_chat_id }
 	/** Returns the user's bio. */
-	public get bio() { return this.source.bio }
+	public get bio() { return this._source.bio }
 
 
 	/**
@@ -25,7 +25,7 @@ export class ChatJoinRequestContext extends Context<IChatJoinRequest> {
 	 * @returns Promise that resolves with true on success, or rejects with an error on failure.
 	 */
 	public approve() {
-		return this.client.api.approveChatJoinRequest({ chat_id: this.source.chat.id, user_id: this.source.from.id });
+		return this.client.api.approveChatJoinRequest({ chat_id: this._source.chat.id, user_id: this._source.from.id });
 	}
 
 	/**
@@ -33,6 +33,6 @@ export class ChatJoinRequestContext extends Context<IChatJoinRequest> {
 	 * @returns Promise that resolves with true on success, or rejects with an error on failure.
 	 */
 	public decline() {
-		return this.client.api.declineChatJoinRequest({ chat_id: this.source.chat.id, user_id: this.source.from.id });
+		return this.client.api.declineChatJoinRequest({ chat_id: this._source.chat.id, user_id: this._source.from.id });
 	}
 }

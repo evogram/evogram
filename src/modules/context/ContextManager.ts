@@ -2,7 +2,7 @@ import { Evogram } from "../../Client";
 import { BotContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ContactContext, DetailedChatContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
 import { Context } from "./Context";
 
-export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights";
+export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned";
 
 /** A class representing a ContextManager used to manage and manipulate contexts. */
 export class ContextManager {
