@@ -1,6 +1,7 @@
 import { Context } from "../../modules/context";
 import { IChatMember, IGetUserProfilePhotosParams, IUser } from "../../interfaces";
 import { getCountryWithCode } from "../../utils";
+import { ChatMemberContext } from "../Chat";
 
 export class UserContext extends Context<IUser & { chat_id?: number | string }> {
 	/** Returns the user's ID. */
@@ -44,7 +45,7 @@ export class UserContext extends Context<IUser & { chat_id?: number | string }> 
 	 * Gets the user's chat member object.
 	 * @returns The chat member object or null if the user is not a member of a chat.
 	*/
-	public async getMember<T extends Context<IChatMember> | object = IChatMember>(): Promise<T | null> {
+	public async getMember<T extends Context<IChatMember> = ChatMemberContext>(): Promise<T | null> {
 		if(!this._source.chat_id) return null;
 
 		if(!this.#member) this.#member = await this.client.api.getChatMember({ chat_id: this._source.chat_id, user_id: this._source.id });

@@ -1,7 +1,7 @@
-import { ICallbackQuery, IChatJoinRequest, IChatMemberUpdated, IChosenInlineResult, IInlineQuery, IMessage, IPoll, IPollAnswer, IPreCheckoutQuery, IShippingQuery, IUpdateName } from "../interfaces";
+import { ICallbackQuery, IChosenInlineResult, IInlineQuery, IMessage, IUpdateName } from "../interfaces";
 import { Evogram } from "../Client";
 import { Polling, Webhook } from "../transports";
-import { ChatJoinRequestContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext } from "../contexts";
+import { ChatJoinRequestContext, ChatMemberUpdatedContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext } from "../contexts";
 
 export type IUpdateHandler<T> = (data: T) => Promise<void> | void;
 
@@ -24,7 +24,7 @@ export class Updates {
 	public on(update: "pre_checkout_query", handler: IUpdateHandler<PreCheckoutQueryContext>): this;
 	public on(update: "poll", handler: IUpdateHandler<PollContext>): this;
 	public on(update: "poll_answer", handler: IUpdateHandler<PollAnswerContext>): this;
-	public on(update: "my_chat_member" | "chat_member", handler: IUpdateHandler<IChatMemberUpdated>): this;
+	public on(update: "my_chat_member" | "chat_member", handler: IUpdateHandler<ChatMemberUpdatedContext>): this;
 	public on(update: "chat_join_request", handler: IUpdateHandler<ChatJoinRequestContext>): this;
 	public on(update: IUpdateName, handler: (data: any) => void): this {
 		this.handlers[update] = (this.handlers[update] || []).concat(handler);

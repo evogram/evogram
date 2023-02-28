@@ -2,7 +2,7 @@ import axios from "axios";
 import { Evogram } from "../Client";
 import { TelegramError } from "./TelegramError";
 import { IAddStickerToSetParams, IAnswerCallbackQueryParams, IAnswerInlineQueryParams, IAnswerPreCheckoutQueryParams, IAnswerShippingQueryParams, IAnswerWebAppQueryParams, IApproveChatJoinRequestParams, IBanChatMemberParams, IBanChatSenderChatParams, IBotCommand, IChat, IChatAdministratorRights, IChatInviteLink, IChatMember, ICloseForumTopicParams, ICloseGeneralForumTopicParams, ICopyMessageParams, ICreateChatInviteLinkParams, ICreateForumTopicParams, ICreateInvoiceLinkParams, ICreateNewStickerSetParams, IDeclineChatJoinRequestParams, IDeleteChatPhotoParams, IDeleteChatStickerSetParams, IDeleteForumTopicParams, IDeleteMessageParams, IDeleteMyCommandsParams, IDeleteStickerFromSetParams, IDeleteWebhookParams, IEditChatInviteLinkParams, IEditForumTopicParams, IEditGeneralForumTopicParams, IEditMessageCaptionParams, IEditMessageLiveLocationParams, IEditMessageMediaParams, IEditMessageReplyMarkupParams, IEditMessageTextParams, IExportChatInviteLinkParams, IFile, IForumTopic, IForwardMessageParams, IGameHighScore, IGetChatAdministratorsParams, IGetChatMemberCountParams, IGetChatMemberParams, IGetChatMenuButtonParams, IGetChatParams, IGetCustomEmojiStickersParams, IGetFileParams, IGetForumTopicIconStickersParams, IGetGameHighScoresParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IGetStickerSetParams, IGetUpdatesParams, IGetUserProfilePhotosParams, IHideGeneralForumTopicParams, ILeaveChatParams, IMenuButton, IMessage, IMessageId, IPinChatMessageParams, IPoll, IPromoteChatMemberParams, IReopenForumTopicParams, IReopenGeneralForumTopicParams, IRestrictChatMemberParams, IRevokeChatInviteLinkParams, ISendAnimationParams, ISendAudioParams, ISendChatActionParams, ISendContactParams, ISendDiceParams, ISendDocumentParams, ISendGameParams, ISendInvoiceParams, ISendLocationParams, ISendMediaGroupParams, ISendMessageParams, ISendPhotoParams, ISendPollParams, ISendStickerParams, ISendVenueParams, ISendVideoNoteParams, ISendVideoParams, ISendVoiceParams, ISentWebAppMessage, ISetChatAdministratorCustomTitleParams, ISetChatDescriptionParams, ISetChatMenuButtonParams, ISetChatPermissionsParams, ISetChatPhotoParams, ISetChatStickerSetParams, ISetChatTitleParams, ISetGameScoreParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams, ISetPassportDataErrorsParams, ISetStickerPositionInSetParams, ISetStickerSetThumbParams, ISetWebhookParams, ISticker, IStickerSet, IStopMessageLiveLocationParams, IStopPollParams, IUnbanChatMemberParams, IUnbanChatSenderChatParams, IUnhideGeneralForumTopicParams, IUnpinAllChatMessagesParams, IUnpinAllForumTopicMessagesParams, IUnpinChatMessageParams, IUpdate, IUploadStickerFileParams, IUser, IUserProfilePhotos, IWebhookInfo } from "../interfaces";
-import { ChatInviteLinkContext, DetailedChatContext, PollContext, UpdateContext, UserContext } from "../contexts";
+import { ChatInviteLinkContext, ChatMemberContext, DetailedChatContext, PollContext, UpdateContext, UserContext } from "../contexts";
 import { Context } from "../modules/context";
 
 export class API {
@@ -408,10 +408,14 @@ export class API {
 	}
 
 	/**
-	 * Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
+	 * Use this method to get a list of administrators in a chat, which aren't bots. 
+	 * Returns an Array of ChatMember objects.
+	 * 
+	 * @param {IGetChatAdministratorsParams} params - An object containing the chat_id of the target chat.
+	 * @returns {Promise<ChatMemberContext[]>} A promise that resolves with an array of ChatMemberContext objects containing information about the requested chat members.
 	 */
-	public getChatAdministrators(params: IGetChatAdministratorsParams): Promise<IChatMember> {
-		return this.call("getChatAdministrators", params);
+	public async getChatAdministrators<T extends Context<IChatMember> = ChatMemberContext>(params: IGetChatAdministratorsParams): Promise<T[]> {
+		return (await this.call("getChatAdministrators", params)).map((member: IChatMember) => this.client.contexts.getContext("ChatMember", member));
 	}
 
 	/**
@@ -422,10 +426,15 @@ export class API {
 	}
 
 	/**
-	 * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a ChatMember object on success.
+	 * Use this method to get information about a member of a chat. 
+	 * The method is only guaranteed to work for other users if the bot is an administrator in the chat. 
+	 * Returns a ChatMember object on success.
+	 * 
+	 * @param {IGetChatMemberParams} params - An object containing the chat_id and user_id of the target chat member.
+	 * @returns {Promise<ChatMemberContext>} A promise that resolves with a ChatMemberContext object containing information about the requested chat member.
 	 */
-	public getChatMember(params: IGetChatMemberParams): Promise<IChatMember> {
-		return this.call("getChatMember", params);
+	public async getChatMember<T extends Context<IChatMember> = ChatMemberContext>(params: IGetChatMemberParams): Promise<T> {
+		return this.client.contexts.getContext("ChatMember", await this.call("getChatMember", params));
 	}
 
 	/**
