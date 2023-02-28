@@ -1,0 +1,49 @@
+import { IMessageEntity, IPoll, IPollOption } from "../../interfaces";
+import { Context } from "../../modules/context";
+
+export class PollContext extends Context<IPoll> {
+	/** Gets the ID of the poll. */
+	public get id() { return this.source.id }
+	/** Gets the question text of the poll. */
+	public get question() { return this.source.question }
+	/** Gets the list of poll options. */
+	public get options() { return this.client.contexts.getContext<IPollOption>("PollOptions", this.source.options) }
+	/** Gets the total number of users that voted in the poll. */
+	public get totalVoterCount() { return this.source.total_voter_count }
+	/** Returns true if the poll is closed. */
+	public get isClosed() { return this.source.is_closed }
+	/** Returns true if the poll is anonymous. */
+	public get isAnonymous() { return this.source.is_anonymous }
+	/** Gets the type of the poll. */
+	public get type() { return this.source.type }
+	/** Returns true if the poll allows multiple answers. */
+	public get allowsMultipleAnswers() { return this.source.allows_multiple_answers }
+	/** Gets the ID of the correct answer option, if specified. */
+	public get correctOptionId() { return this.source.correct_option_id }
+	/** Gets the text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, if specified. */
+	public get explanation() { return this.source.explanation }
+	/** Gets the entities that appear in the explanation text, if specified. */
+	public get explanationEntities() { return this.source.explanation_entities && this.client.contexts.getContext<IMessageEntity>("MessageEntity", this.source.explanation_entities) }
+	/** Gets the amount of time in seconds the poll will be active after creation, if specified. */
+	public get openPeriod() { return this.source.open_period }
+
+
+	/**
+	 * This method searches for a poll option with the given text among all the options in the poll.
+	 * @param text Parameter specifies the text to search for.
+	 * @returns The found poll option.
+	 */
+	public getPollOptionByText(text: string) {
+		return this.source.options.find((option) => option.text === text);
+	}
+
+	/**
+	 * Returns the percentage of votes for the transmitted option
+	 * @param option Poll option from which to calculate the percentage
+	 * @returns Percentage of those who voted for option
+	 */
+	public getPollOptionPercentage(option: IPollOption) {
+		const totalVoters = this.source.total_voter_count;
+		return (option.voter_count / totalVoters) * 100;
+	}
+}
