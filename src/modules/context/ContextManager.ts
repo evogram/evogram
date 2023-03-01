@@ -1,5 +1,5 @@
 import { Evogram } from "../../Client";
-import { BotContext, CallbackQueryContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext, ChatMemberUpdatedContext, ContactContext, DetailedChatContext, InlineQueryContext, LocationContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
+import { BotContext, CallbackQueryContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext, ChatMemberUpdatedContext, ChosenInlineResultContext, ContactContext, DetailedChatContext, InlineQueryContext, LocationContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
 import { Context } from "./Context";
 
 export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned" | "Location";
@@ -36,7 +36,8 @@ export class ContextManager {
 		"ChatMemberUpdated": ChatMemberUpdatedContext,
 		"CallbackQuery": CallbackQueryContext,
 		"Location": LocationContext,
-		"InlineQuery": InlineQueryContext
+		"InlineQuery": InlineQueryContext,
+		"ChosenInlineResult": ChosenInlineResultContext
 	};
   
 	/**
