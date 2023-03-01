@@ -6,3 +6,4 @@ export * from "./Message";
 export * from "./Chat";
 export * from "./CallbackQueryContext";
 export * from "./LocationContext";
+export * from "./Inline";
