@@ -1,8 +1,8 @@
 import { Evogram } from "../../Client";
-import { BotContext, CallbackQueryContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext, ChatMemberUpdatedContext, ContactContext, DetailedChatContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
+import { BotContext, CallbackQueryContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext, ChatMemberUpdatedContext, ContactContext, DetailedChatContext, LocationContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
 import { Context } from "./Context";
 
-export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned";
+export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned" | "Location";
 
 /** A class representing a ContextManager used to manage and manipulate contexts. */
 export class ContextManager {
@@ -34,7 +34,8 @@ export class ContextManager {
 		"ChatMemberOwner": ChatMemberOwnerContext,
 		"ChatMemberRestricted": ChatMemberRestrictedContext,
 		"ChatMemberUpdated": ChatMemberUpdatedContext,
-		"CallbackQuery": CallbackQueryContext
+		"CallbackQuery": CallbackQueryContext,
+		"Location": LocationContext
 	};
   
 	/**
