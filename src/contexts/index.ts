@@ -4,3 +4,4 @@ export * from "./Poll";
 export * from "./Payments";
 export * from "./Message";
 export * from "./Chat";
+export * from "./CallbackQueryContext";
