@@ -337,7 +337,21 @@ export interface IMessage {
 	/** Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons. */
 	reply_markup?: IInlineKeyboardMarkup;
 }
-	
+
+export interface IForwardMessage {
+	/** Optional. For forwarded messages, sender of the original message */
+	forward_from?: IUser;
+	/** Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat */
+	forward_from_chat?: IChat;
+	/** Optional. For messages forwarded from channels, identifier of the original message in the channel */
+	forward_from_message_id?: number;
+	/** Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present */
+	forward_signature?: string;
+	/** Optional. Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages */
+	forward_sender_name?: string;
+	/** Optional. For forwarded messages, date the original message was sent in Unix time */
+	forward_date?: number;
+}
 
 /** This object represents a unique message identifier. */
 export interface IMessageId {

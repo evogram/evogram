@@ -1,8 +1,9 @@
 import { Evogram } from "../../Client";
 import { BotContext, CallbackQueryContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext, ChatMemberUpdatedContext, ChosenInlineResultContext, ContactContext, DetailedChatContext, InlineQueryContext, LocationContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext } from "../../contexts";
+import { ForwardMessageContext } from "../../contexts/Message/ForwardMessage";
 import { Context } from "./Context";
 
-export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned" | "Location";
+export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned" | "Location" | "ForwardMessage";
 
 /** A class representing a ContextManager used to manage and manipulate contexts. */
 export class ContextManager {
@@ -37,7 +38,8 @@ export class ContextManager {
 		"CallbackQuery": CallbackQueryContext,
 		"Location": LocationContext,
 		"InlineQuery": InlineQueryContext,
-		"ChosenInlineResult": ChosenInlineResultContext
+		"ChosenInlineResult": ChosenInlineResultContext,
+		"ForwardMessage": ForwardMessageContext
 	};
   
 	/**
