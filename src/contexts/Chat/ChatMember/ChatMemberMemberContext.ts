@@ -1,4 +1,4 @@
-import { IBanChatMemberParams, IChatMemberAdministrator, IChatMemberMember, IChatMemberRestricted, IChatPermissions, IPromoteChatMemberParams, IRestrictChatMemberParams } from "../../../interfaces";
+import type { IBanChatMemberParams, IChatMemberAdministrator, IChatMemberMember, IChatMemberRestricted, IChatPermissions, IPromoteChatMemberParams, IRestrictChatMemberParams } from "../../../interfaces";
 import { Context } from "../../../modules/context";
 
 export class ChatMemberMemberContext extends Context<(IChatMemberMember | IChatMemberAdministrator | IChatMemberRestricted) & { chat_id: number | string }> {

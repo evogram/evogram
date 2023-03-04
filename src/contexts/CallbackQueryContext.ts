@@ -1,6 +1,6 @@
-import { IAnswerCallbackQueryParams, ICallbackQuery } from "../interfaces";
+import type { IAnswerCallbackQueryParams, ICallbackQuery } from "../interfaces";
 import { Context } from "../modules/context";
-import { UserContext } from "./Essence";
+import { UserContext } from "./";
 
 export class CallbackQueryContext extends Context<ICallbackQuery> {
 	/** The user who triggered the callback query. */

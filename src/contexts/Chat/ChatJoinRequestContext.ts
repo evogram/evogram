@@ -1,8 +1,6 @@
-import { IChatJoinRequest } from "../../interfaces";
+import type { IChatJoinRequest } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "../Essence";
-import { ChatContext } from "./ChatContext";
-import { ChatInviteLinkContext } from "./ChatInviteLinkContext";
+import { UserContext, ChatContext, ChatInviteLinkContext } from "../";
 
 export class ChatJoinRequestContext extends Context<IChatJoinRequest> {
 	/** The chat the join request was sent to. */

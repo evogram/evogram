@@ -1,7 +1,6 @@
-import { IChat, IChatInviteLink, ICreateChatInviteLinkParams, IInputFile } from "../../interfaces";
+import type { IChat, IChatInviteLink, ICreateChatInviteLinkParams, IInputFile } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { ChatInviteLinkContext } from "./ChatInviteLinkContext";
-import { DetailedChatContext } from "./DetailedChatContext";
+import { ChatInviteLinkContext, DetailedChatContext } from "../";
 
 export class ChatContext extends Context<IChat> {
 	/** The ID of the chat. */

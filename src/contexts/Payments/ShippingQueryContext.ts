@@ -1,6 +1,6 @@
-import { IAnswerShippingQueryParams, IShippingAddress, IShippingQuery } from "../../interfaces";
+import type { IAnswerShippingQueryParams, IShippingAddress, IShippingQuery } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "../Essence/UserContext";
+import { UserContext } from "../";
 
 export class ShippingQueryContext extends Context<IShippingQuery> {
 	/** The user who sent the shipping query */

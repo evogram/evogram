@@ -1,6 +1,6 @@
-import { IChatInviteLink, IEditChatInviteLinkParams } from "../../interfaces";
+import type { IChatInviteLink, IEditChatInviteLinkParams } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "../Essence/UserContext";
+import { UserContext } from "../";
 
 export class ChatInviteLinkContext extends Context<IChatInviteLink & { chat_id: number | string }> {
 	/** The user who created the chat invite link. */

@@ -1,7 +1,6 @@
-import { IForwardMessage } from "../../interfaces";
+import type { IForwardMessage } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { ChatContext } from "../Chat";
-import { UserContext } from "../Essence";
+import { ChatContext, UserContext } from "../";
 
 export class ForwardMessageContext extends Context<IForwardMessage> {
 	/** The user who sent the forwarded message, if available. */

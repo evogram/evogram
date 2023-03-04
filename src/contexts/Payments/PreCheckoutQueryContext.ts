@@ -1,7 +1,6 @@
-import { IPreCheckoutQuery } from "../../interfaces";
+import type { IPreCheckoutQuery } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "../Essence/UserContext";
-import { OrderInfoContext } from "./OrderInfoContext";
+import { UserContext, OrderInfoContext } from "../";
 
 export class PreCheckoutQueryContext extends Context<IPreCheckoutQuery> {
 	/** Returns a `UserContext` object that represents the user who initiated the pre-checkout query. */

@@ -1,5 +1,5 @@
-import { ILocation } from "../interfaces";
-import { Context } from "../modules/context";
+import type { ILocation } from "../../interfaces";
+import { Context } from "../../modules/context";
 
 export class LocationContext extends Context<ILocation> {
 	public source = this._source;

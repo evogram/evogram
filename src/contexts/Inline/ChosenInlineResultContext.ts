@@ -1,7 +1,6 @@
-import { IAnswerInlineQueryParams, IChosenInlineResult, IInlineQueryResult } from "../../interfaces";
+import type { IAnswerInlineQueryParams, IChosenInlineResult, IInlineQueryResult } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "../Essence";
-import { LocationContext } from "../LocationContext";
+import { UserContext, LocationContext } from "../";
 
 export class ChosenInlineResultContext extends Context<IChosenInlineResult> {
 	/** The user who chose the inline result. */

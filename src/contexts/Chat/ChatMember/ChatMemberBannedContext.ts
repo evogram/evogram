@@ -1,5 +1,4 @@
-import { API } from "../../../API";
-import { IChatMemberBanned } from "../../../interfaces";
+import type { IChatMemberBanned } from "../../../interfaces";
 import { Context } from "../../../modules/context";
 
 export class ChatMemberBannedContext extends Context<IChatMemberBanned & { chat_id: number | string }> {

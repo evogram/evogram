@@ -1,4 +1,4 @@
-import { IUpdate, IUpdateName } from "../interfaces";
+import type { IUpdate, IUpdateName } from "../interfaces";
 import { Context } from "../modules/context";
 
 export class UpdateContext extends Context<IUpdate> {

@@ -1,4 +1,4 @@
-import { IMessage, IUpdateName } from "../interfaces";
+import type { IMessage, IUpdateName } from "../interfaces";
 import { Evogram } from "../Client";
 import { Polling, Webhook } from "../transports";
 import { CallbackQueryContext, ChatJoinRequestContext, ChatMemberUpdatedContext, ChosenInlineResultContext, InlineQueryContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext } from "../contexts";

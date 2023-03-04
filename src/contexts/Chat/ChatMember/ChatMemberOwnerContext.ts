@@ -1,4 +1,4 @@
-import { IChatMemberOwner } from "../../../interfaces"
+import type { IChatMemberOwner } from "../../../interfaces"
 import { Context } from "../../../modules/context"
 
 export class ChatMemberOwnerContext extends Context<IChatMemberOwner> {

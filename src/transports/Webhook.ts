@@ -1,7 +1,7 @@
 import http from "http";
 import url from "url";
 
-import { ISetWebhookParams } from "../interfaces";
+import type { ISetWebhookParams } from "../interfaces";
 import { EventTransport, EventTransportState } from "./EventTransport";
 
 export class Webhook extends EventTransport {

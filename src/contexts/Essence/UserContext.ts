@@ -1,7 +1,7 @@
+import type { IChatMember, IGetUserProfilePhotosParams, IUser } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { IChatMember, IGetUserProfilePhotosParams, IUser } from "../../interfaces";
 import { getCountryWithCode } from "../../utils";
-import { ChatMemberContext } from "../Chat";
+import { ChatMemberContext } from "../";
 
 export class UserContext extends Context<IUser & { chat_id?: number | string }> {
 	/** Returns the user's ID. */

@@ -1,7 +1,6 @@
 import { IAnswerInlineQueryParams, IInlineQuery, IInlineQueryResult } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "../Essence";
-import { LocationContext } from "../LocationContext";
+import { UserContext, LocationContext } from "../";
 
 export class InlineQueryContext extends Context<IInlineQuery> {
 	/** Sender */

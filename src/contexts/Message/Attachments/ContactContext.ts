@@ -1,5 +1,5 @@
+import type { IContact } from "../../../interfaces";
 import { Context } from "../../../modules/context";
-import { IContact } from "../../../interfaces";
 import { getCountryCodesWithPhone, getCountryWithCode, parseVCard } from "../../../utils";
 
 export class ContactContext extends Context<IContact> {

@@ -1,11 +1,6 @@
-import { IChatMember } from "../../../interfaces";
+import type { IChatMember } from "../../../interfaces";
 import { Context } from "../../../modules/context";
-import { UserContext } from "../../Essence";
-import { ChatMemberAdministratorContext } from "./ChatMemberAdministratorContext";
-import { ChatMemberBannedContext } from "./ChatMemberBannedContext";
-import { ChatMemberMemberContext } from "./ChatMemberMemberContext";
-import { ChatMemberOwnerContext } from "./ChatMemberOwnerContext";
-import { ChatMemberRestrictedContext } from "./ChatMemberRestrictedContext";
+import { UserContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext } from "../../";
 
 export class ChatMemberContext extends Context<IChatMember & { chat_id?: number | string }> {
 	public source = this._source;

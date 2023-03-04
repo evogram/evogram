@@ -1,7 +1,6 @@
-import { Evogram } from "../../Client";
-import { IPollAnswer } from "../../interfaces";
+import type { IPollAnswer } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "../Essence";
+import { UserContext } from "../";
 
 export class PollAnswerContext extends Context<IPollAnswer> {
 	/** User context for the user who changed the answer to the poll. */

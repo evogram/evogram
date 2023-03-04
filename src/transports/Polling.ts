@@ -1,4 +1,4 @@
-import { IGetUpdatesParams } from "../interfaces";
+import type { IGetUpdatesParams } from "../interfaces";
 import { EventTransport, EventTransportState } from "./EventTransport";
 
 export class Polling extends EventTransport {

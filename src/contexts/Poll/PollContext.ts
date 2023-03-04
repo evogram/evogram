@@ -1,4 +1,4 @@
-import { IMessageEntity, IPoll, IPollOption } from "../../interfaces";
+import type { IMessageEntity, IPoll, IPollOption } from "../../interfaces";
 import { Context } from "../../modules/context";
 
 export class PollContext extends Context<IPoll> {

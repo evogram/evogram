@@ -5,5 +5,5 @@ export * from "./Payments";
 export * from "./Message";
 export * from "./Chat";
 export * from "./CallbackQueryContext";
-export * from "./LocationContext";
+export * from "./Location";
 export * from "./Inline";

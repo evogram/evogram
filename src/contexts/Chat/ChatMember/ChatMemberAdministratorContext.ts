@@ -1,6 +1,6 @@
+import type { IChatMemberAdministrator } from "../../../interfaces";
 import { Evogram } from "../../../Client";
-import { IChatMemberAdministrator } from "../../../interfaces";
-import { ChatMemberMemberContext } from "./ChatMemberMemberContext";
+import { ChatMemberMemberContext } from "./";
 
 export class ChatMemberAdministratorContext extends ChatMemberMemberContext {
 	constructor(client: Evogram, protected _source: IChatMemberAdministrator & { chat_id: number | string }) { super(client, _source) }

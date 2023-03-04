@@ -1,6 +1,6 @@
-import { IBotCommand, IChatAdministratorRights, IDeleteMyCommandsParams, IGetChatMenuButtonParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IMenuButton, ISetChatMenuButtonParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams } from "../../interfaces";
+import type { IBotCommand, IChatAdministratorRights, IDeleteMyCommandsParams, IGetChatMenuButtonParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IMenuButton, ISetChatMenuButtonParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../";
 
 export class BotContext extends UserContext {
 	/**

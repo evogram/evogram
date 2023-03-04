@@ -1,6 +1,6 @@
+import type { IChatMemberRestricted, IChatPermissions } from "../../../interfaces";
 import { Evogram } from "../../../Client";
-import { IChatMemberRestricted, IChatPermissions } from "../../../interfaces";
-import { ChatMemberMemberContext } from "./ChatMemberMemberContext";
+import { ChatMemberMemberContext } from "../../";
 
 export class ChatMemberRestrictedContext extends ChatMemberMemberContext {
 	constructor(client: Evogram, protected _source: IChatMemberRestricted & { chat_id: number | string }) { super(client, _source) }

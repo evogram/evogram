@@ -1,4 +1,4 @@
-import { IOrderInfo, IShippingAddress } from "../../interfaces";
+import type { IOrderInfo, IShippingAddress } from "../../interfaces";
 import { Context } from "../../modules/context";
 import { getCountryCodesWithPhone, getCountryWithCode } from "../../utils";
 

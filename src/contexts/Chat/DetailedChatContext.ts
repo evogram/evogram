@@ -1,4 +1,4 @@
-import { IChatLocation, IChatPermissions, IChatPhoto, IMessage } from "../../interfaces";
+import type { IChatLocation, IChatPermissions, IChatPhoto, IMessage } from "../../interfaces";
 import { ChatContext } from "./ChatContext";
 
 export class DetailedChatContext extends ChatContext {
