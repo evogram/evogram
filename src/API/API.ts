@@ -2,7 +2,7 @@ import axios from "axios";
 import { Evogram } from "../Client";
 import { TelegramError } from "./TelegramError";
 import { IAddStickerToSetParams, IAnswerCallbackQueryParams, IAnswerInlineQueryParams, IAnswerPreCheckoutQueryParams, IAnswerShippingQueryParams, IAnswerWebAppQueryParams, IApproveChatJoinRequestParams, IBanChatMemberParams, IBanChatSenderChatParams, IBotCommand, IChat, IChatAdministratorRights, IChatInviteLink, IChatMember, ICloseForumTopicParams, ICloseGeneralForumTopicParams, ICopyMessageParams, ICreateChatInviteLinkParams, ICreateForumTopicParams, ICreateInvoiceLinkParams, ICreateNewStickerSetParams, IDeclineChatJoinRequestParams, IDeleteChatPhotoParams, IDeleteChatStickerSetParams, IDeleteForumTopicParams, IDeleteMessageParams, IDeleteMyCommandsParams, IDeleteStickerFromSetParams, IDeleteWebhookParams, IEditChatInviteLinkParams, IEditForumTopicParams, IEditGeneralForumTopicParams, IEditMessageCaptionParams, IEditMessageLiveLocationParams, IEditMessageMediaParams, IEditMessageReplyMarkupParams, IEditMessageTextParams, IExportChatInviteLinkParams, IFile, IForumTopic, IForwardMessageParams, IGameHighScore, IGetChatAdministratorsParams, IGetChatMemberCountParams, IGetChatMemberParams, IGetChatMenuButtonParams, IGetChatParams, IGetCustomEmojiStickersParams, IGetFileParams, IGetForumTopicIconStickersParams, IGetGameHighScoresParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IGetStickerSetParams, IGetUpdatesParams, IGetUserProfilePhotosParams, IHideGeneralForumTopicParams, ILeaveChatParams, IMenuButton, IMessage, IMessageId, IPinChatMessageParams, IPoll, IPromoteChatMemberParams, IReopenForumTopicParams, IReopenGeneralForumTopicParams, IRestrictChatMemberParams, IRevokeChatInviteLinkParams, ISendAnimationParams, ISendAudioParams, ISendChatActionParams, ISendContactParams, ISendDiceParams, ISendDocumentParams, ISendGameParams, ISendInvoiceParams, ISendLocationParams, ISendMediaGroupParams, ISendMessageParams, ISendPhotoParams, ISendPollParams, ISendStickerParams, ISendVenueParams, ISendVideoNoteParams, ISendVideoParams, ISendVoiceParams, ISentWebAppMessage, ISetChatAdministratorCustomTitleParams, ISetChatDescriptionParams, ISetChatMenuButtonParams, ISetChatPermissionsParams, ISetChatPhotoParams, ISetChatStickerSetParams, ISetChatTitleParams, ISetGameScoreParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams, ISetPassportDataErrorsParams, ISetStickerPositionInSetParams, ISetStickerSetThumbParams, ISetWebhookParams, ISticker, IStickerSet, IStopMessageLiveLocationParams, IStopPollParams, IUnbanChatMemberParams, IUnbanChatSenderChatParams, IUnhideGeneralForumTopicParams, IUnpinAllChatMessagesParams, IUnpinAllForumTopicMessagesParams, IUnpinChatMessageParams, IUpdate, IUploadStickerFileParams, IUser, IUserProfilePhotos, IWebhookInfo } from "../interfaces";
-import { ChatInviteLinkContext, ChatMemberContext, DetailedChatContext, PollContext, UpdateContext, UserContext } from "../contexts";
+import { ChatInviteLinkContext, ChatMemberContext, DetailedChatContext, ForumTopicContext, PollContext, UpdateContext, UserContext } from "../contexts";
 import { Context } from "../modules/context";
 
 export class API {
@@ -459,10 +459,15 @@ export class API {
 	}
 
 	/**
-	 * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
+	 * Use this method to create a topic in a forum supergroup chat. 
+	 * The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. 
+	 * Returns information about the created topic as a ForumTopic object.
+	 * 
+	 * @param {ICreateForumTopicParams} params - The parameters to create a forum topic.
+	 * @returns {Promise} - Returns information about the created topic as a ForumTopic object.
 	 */
-	public createForumTopic(params: ICreateForumTopicParams): Promise<IForumTopic> {
-		return this.call("createForumTopic", params);
+	public async createForumTopic<T extends Context<IForumTopic & any> = ForumTopicContext>(params: ICreateForumTopicParams): Promise<T> {
+		return this.client.contexts.getContext("ForumTopic", Object.assign(await this.call("createForumTopic", params), { chat_id: params.chat_id }));
 	}
 
 	/**

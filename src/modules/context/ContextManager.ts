@@ -1,8 +1,8 @@
 import { Evogram } from "../../Client";
-import { BotContext, CallbackQueryContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext, ChatMemberUpdatedContext, ChosenInlineResultContext, ContactContext, DetailedChatContext, InlineQueryContext, LocationContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext, ForwardMessageContext, VenueContext } from "../../contexts";
+import { BotContext, CallbackQueryContext, ChatContext, ChatInviteLinkContext, ChatJoinRequestContext, ChatMemberAdministratorContext, ChatMemberBannedContext, ChatMemberContext, ChatMemberMemberContext, ChatMemberOwnerContext, ChatMemberRestrictedContext, ChatMemberUpdatedContext, ChosenInlineResultContext, ContactContext, DetailedChatContext, InlineQueryContext, LocationContext, OrderInfoContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext, UserContext, ForwardMessageContext, VenueContext, ForumTopicContext } from "../../contexts";
 import { Context } from "./Context";
 
-export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned" | "Location" | "ForwardMessage" | "Venue";
+export type ISupportedContexts = "Update" | "User" | "Bot" | "Poll" | "PollAnswer" | "OrderInfo" | "PreCheckoutQuery" | "ShippingQuery" | "Contact" | "Chat" | "DetailedChat" | "ChatInviteLink" | "MessageEntity" | "Message" | "InlineQuery" | "ChosenInlineResult" | "CallbackQuery" | "ChatMemberUpdated" | "ChatJoinRequest" | "ChatPhoto" | "ChatPermissions" | "ChatLocation" | "ShippingAddress" | "BotCommand" | "PollOption" | "MenuButton" | "ChatAdministratorRights" | "ChatMember" | "ChatMemberOwner" | "ChatMemberAdministrator" | "ChatMemberMember" | "ChatMemberRestricted" | "ChatMemberBanned" | "Location" | "ForwardMessage" | "Venue" | "ForumTopic";
 
 /** A class representing a ContextManager used to manage and manipulate contexts. */
 export class ContextManager {
@@ -40,6 +40,7 @@ export class ContextManager {
 		"ChosenInlineResult": ChosenInlineResultContext,
 		"ForwardMessage": ForwardMessageContext,
 		"Venue": VenueContext,
+		"ForumTopic": ForumTopicContext,
 	};
   
 	/**
