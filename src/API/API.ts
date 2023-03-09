@@ -2,7 +2,7 @@ import axios from "axios";
 import { Evogram } from "../Client";
 import { TelegramError } from "./TelegramError";
 import { IAddStickerToSetParams, IAnswerCallbackQueryParams, IAnswerInlineQueryParams, IAnswerPreCheckoutQueryParams, IAnswerShippingQueryParams, IAnswerWebAppQueryParams, IApproveChatJoinRequestParams, IBanChatMemberParams, IBanChatSenderChatParams, IBotCommand, IChat, IChatAdministratorRights, IChatInviteLink, IChatMember, ICloseForumTopicParams, ICloseGeneralForumTopicParams, ICopyMessageParams, ICreateChatInviteLinkParams, ICreateForumTopicParams, ICreateInvoiceLinkParams, ICreateNewStickerSetParams, IDeclineChatJoinRequestParams, IDeleteChatPhotoParams, IDeleteChatStickerSetParams, IDeleteForumTopicParams, IDeleteMessageParams, IDeleteMyCommandsParams, IDeleteStickerFromSetParams, IDeleteWebhookParams, IEditChatInviteLinkParams, IEditForumTopicParams, IEditGeneralForumTopicParams, IEditMessageCaptionParams, IEditMessageLiveLocationParams, IEditMessageMediaParams, IEditMessageReplyMarkupParams, IEditMessageTextParams, IExportChatInviteLinkParams, IFile, IForumTopic, IForwardMessageParams, IGameHighScore, IGetChatAdministratorsParams, IGetChatMemberCountParams, IGetChatMemberParams, IGetChatMenuButtonParams, IGetChatParams, IGetCustomEmojiStickersParams, IGetFileParams, IGetForumTopicIconStickersParams, IGetGameHighScoresParams, IGetMyCommandsParams, IGetMyDefaultAdministratorRightsParams, IGetStickerSetParams, IGetUpdatesParams, IGetUserProfilePhotosParams, IHideGeneralForumTopicParams, ILeaveChatParams, IMenuButton, IMessage, IMessageId, IPinChatMessageParams, IPoll, IPromoteChatMemberParams, IReopenForumTopicParams, IReopenGeneralForumTopicParams, IRestrictChatMemberParams, IRevokeChatInviteLinkParams, ISendAnimationParams, ISendAudioParams, ISendChatActionParams, ISendContactParams, ISendDiceParams, ISendDocumentParams, ISendGameParams, ISendInvoiceParams, ISendLocationParams, ISendMediaGroupParams, ISendMessageParams, ISendPhotoParams, ISendPollParams, ISendStickerParams, ISendVenueParams, ISendVideoNoteParams, ISendVideoParams, ISendVoiceParams, ISentWebAppMessage, ISetChatAdministratorCustomTitleParams, ISetChatDescriptionParams, ISetChatMenuButtonParams, ISetChatPermissionsParams, ISetChatPhotoParams, ISetChatStickerSetParams, ISetChatTitleParams, ISetGameScoreParams, ISetMyCommandsParams, ISetMyDefaultAdministratorRightsParams, ISetPassportDataErrorsParams, ISetStickerPositionInSetParams, ISetStickerSetThumbParams, ISetWebhookParams, ISticker, IStickerSet, IStopMessageLiveLocationParams, IStopPollParams, IUnbanChatMemberParams, IUnbanChatSenderChatParams, IUnhideGeneralForumTopicParams, IUnpinAllChatMessagesParams, IUnpinAllForumTopicMessagesParams, IUnpinChatMessageParams, IUpdate, IUploadStickerFileParams, IUser, IUserProfilePhotos, IWebhookInfo } from "../interfaces";
-import { ChatInviteLinkContext, ChatMemberContext, DetailedChatContext, ForumTopicContext, PollContext, UpdateContext, UserContext } from "../contexts";
+import { BotContext, ChatInviteLinkContext, ChatMemberContext, DetailedChatContext, ForumTopicContext, IncomingMessageContext, PollContext, UpdateContext, UserContext } from "../contexts";
 import { Context } from "../modules/context";
 
 export class API {
@@ -57,7 +57,7 @@ export class API {
 	 * 
 	 * @returns {Promise<T>} A Promise that resolves with an object of type T, which defaults to UserContext.
 	 */
-	public async getMe<T extends Context<IUser> = UserContext>(): Promise<T> {
+	public async getMe<T extends Context<IUser> = BotContext>(): Promise<T> {
 		return this.client.contexts.getContext("Bot", await this.call("getMe"));
 	}
 
@@ -76,17 +76,30 @@ export class API {
 	}
 
 	/**
-	 * Use this method to send text messages. On success, the sent Message is returned.
+	 * Use this method to send text messages. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendmessage)
+	 * 
+	 * @param params The parameters to sending the message.
+	 * @returns The context of the sent message.
 	 */
-	public sendMessage(params: ISendMessageParams): Promise<IMessage> {
-		return this.call("sendMessage", params);
+	public async sendMessage<T extends Context<IMessage> = IncomingMessageContext>(params: ISendMessageParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.call("sendMessage", params));
 	}
 
 	/**
-	 * Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned.
+	 * Use this method to forward messages of any kind. 
+	 * Service messages can't be forwarded. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#forwardmessage)
+	 * 
+	 * @param params - The parameters for forwarding the message.
+	 * @returns A Promise that resolves to the incoming message context containing the forwarded message.
 	 */
-	public forwardMessage(params: IForwardMessageParams): Promise<IMessage> {
-		return this.call("forwardMessage", params);
+	public async forwardMessage<T extends Context<IMessage> = IncomingMessageContext>(params: IForwardMessageParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.call("forwardMessage", params));
 	}
 
 	/**
@@ -97,110 +110,209 @@ export class API {
 	}
 
 	/**
-	 * Use this method to send photos. On success, the sent Message is returned.
+	 * Use this method to send photos. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendphoto)
+	 * 
+	 * @param params The parameters for sending a photo, including chatId and photo.
+	 * @returns A Promise of type T, which extends Context (IncomingMessageContext by default).
 	 */
-	public sendPhoto(params: ISendPhotoParams): Promise<IMessage> {
-		return this.upload("sendPhoto", params);
+	public async sendPhoto<T extends Context<IMessage> = IncomingMessageContext>(params: ISendPhotoParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendPhoto", params));
 	}
 
 	/**
 	 * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
 	 * 
 	 * For sending voice messages, use the sendVoice method instead.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendaudio)
+	 * 
+	 * @param params The parameters for sending the audio file.
+	 * @returns The sent message on success.
 	 */
-	public sendAudio(params: ISendAudioParams): Promise<IMessage> {
-		return this.upload("sendAudio", params);
+	public async sendAudio<T extends Context<IMessage> = IncomingMessageContext>(params: ISendAudioParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendAudio", params));
 	}
 
 	/**
-	 * Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+	 * Use this method to send general files. 
+	 * On success, the sent Message is returned. 
+	 * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#senddocument)
+	 * 
+	 * @param params The parameters for sending the file.
+	 * @returns The sent message on success.
 	 */
-	public sendDocument(params: ISendDocumentParams): Promise<IMessage> {
-		return this.upload("sendDocument", params);
+	public async sendDocument<T extends Context<IMessage> = IncomingMessageContext>(params: ISendDocumentParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendDocument", params));
 	}
 
 	/**
-	 * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+	 * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). 
+	 * On success, the sent Message is returned. 
+	 * Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendvideo)
+	 * 
+	 * @param params The parameters for sending the video file.
+	 * @returns The sent message on success.
 	 */
-	public sendVideo(params: ISendVideoParams): Promise<IMessage> {
-		return this.upload("sendVideo", params);
+	public async sendVideo<T extends Context<IMessage> = IncomingMessageContext>(params: ISendVideoParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendVideo", params));
 	}
 
 	/**
-	 * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+	 * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). 
+	 * On success, the sent Message is returned. 
+	 * Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendanimation)
+	 * 
+	 * @param params The parameters for sending the animation file.
+	 * @returns The sent message on success.
 	 */
-	public sendAnimation(params: ISendAnimationParams): Promise<IMessage> {
-		return this.upload("sendAnimation", params);
+	public async sendAnimation<T extends Context<IMessage> = IncomingMessageContext>(params: ISendAnimationParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendAnimation", params));
 	}
 
 	/**
-	 * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+	 * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. 
+	 * For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). 
+	 * On success, the sent Message is returned. 
+	 * Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendvoice)
+	 * 
+	 * @param params The parameters for sending the voice file.
+	 * @returns The sent message on success.
 	 */
-	public sendVoice(params: ISendVoiceParams): Promise<IMessage> {
-		return this.upload("sendVoice", params);
+	public async sendVoice<T extends Context<IMessage> = IncomingMessageContext>(params: ISendVoiceParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendVoice", params));
 	}
 
 	/**
-	 * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.
+	 * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. 
+	 * Use this method to send video messages. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendvideonote)
+	 * 
+	 * @param params The parameters for sending the voice note file.
+	 * @returns The sent message on success.
 	 */
-	public sendVideoNote(params: ISendVideoNoteParams): Promise<IMessage> {
-		return this.upload("sendVideoNote", params);
+	public async sendVideoNote<T extends Context<IMessage> = IncomingMessageContext>(params: ISendVideoNoteParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendVideoNote", params));
 	}
 
 	/**
-	 * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
+	 * Use this method to send a group of photos, videos, documents or audios as an album. 
+	 * Documents and audio files can be only grouped in an album with messages of the same type. 
+	 * On success, an array of Messages that were sent is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendmediagroup)
+	 * 
+	 * @param params The parameters for sending the media group.
+	 * @returns A Promise that resolves with an array of messages that were sent.
 	 */
-	public sendMediaGroup(params: ISendMediaGroupParams): Promise<IMessage[]> {
-		return this.upload("sendMediaGroup", params);
+	public async sendMediaGroup<T extends Context<IMessage> = IncomingMessageContext>(params: ISendMediaGroupParams): Promise<T[]> {
+		return this.client.contexts.getContext("IncomingMessage", await this.upload("sendMediaGroup", params));
 	}
 
 	/**
-	 * Use this method to send point on the map. On success, the sent Message is returned.
+	 * Use this method to send point on the map. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendlocation)
+	 * 
+	 * @param params The parameters for sending location.
+	 * @returns The sent message on success.
 	 */
-	public sendLocation(params: ISendLocationParams): Promise<IMessage> {
-		return this.call("sendLocation", params);
+	public async sendLocation<T extends Context<IMessage> = IncomingMessageContext>(params: ISendLocationParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.call("sendLocation", params));
 	}
 
 	/**
-	 * Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * Use this method to edit live location messages. 
+	 * A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. 
+	 * On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#editmessagelivelocation)
+	 * 
+	 * @param params The parameters for editing live location.
+	 * @returns The editing message on success.
 	 */
-	public editMessageLiveLocation(params: IEditMessageLiveLocationParams): Promise<IMessage | true> {
-		return this.call("editMessageLiveLocation", params);
+	public async editMessageLiveLocation<T extends Context<IMessage> = IncomingMessageContext>(params: IEditMessageLiveLocationParams): Promise<T | true> {
+		const response = await this.call("editMessageLiveLocation", params);
+		return typeof response === "object" ? this.client.contexts.getContext("IncomingMessage", response) : response;
 	}
 
 	/**
-	 * Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * Use this method to stop updating a live location message before live_period expires. 
+	 * On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#stopmessagelivelocation)
+	 * 
+	 * @param params The parameters for stopping a live location
+	 * @returns The sent message on success.
 	 */
-	public stopMessageLiveLocation(params: IStopMessageLiveLocationParams): Promise<IMessage | true> {
-		return this.call("stopMessageLiveLocation", params);
+	public async stopMessageLiveLocation<T extends Context<IMessage> = IncomingMessageContext>(params: IStopMessageLiveLocationParams): Promise<T | true> {
+		const response = await this.upload("stopMessageLiveLocation", params);
+		return typeof response === "object" ? this.client.contexts.getContext("IncomingMessage", response) : response;
 	}
 
 	/**
-	 * Use this method to send information about a venue. On success, the sent Message is returned.
+	 * Use this method to send information about a venue. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendvenue)
+	 * 
+	 * @param params The parameters for sending venue.
+	 * @returns The sent message on success.
 	 */
-	public sendVenue(params: ISendVenueParams): Promise<IMessage> {
-		return this.call("sendVenue", params);
+	public async sendVenue<T extends Context<IMessage> = IncomingMessageContext>(params: ISendVenueParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.call("sendVenue", params));
 	}
 
 	/**
-	 * Use this method to send phone contacts. On success, the sent Message is returned.
+	 * Use this method to send phone contacts. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendcontact)
+	 * 
+	 * @param params The parameters for sending contact
+	 * @returns The sent message on success.
 	 */
-	public sendContact(params: ISendContactParams): Promise<IMessage> {
-		return this.call("sendContact", params);
+	public async sendContact<T extends Context<IMessage> = IncomingMessageContext>(params: ISendContactParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.call("sendContact", params));
 	}
 
 	/**
-	 * Use this method to send a native poll. On success, the sent Message is returned.
+	 * Use this method to send a native poll. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendpoll)
+	 * 
+	 * @param The parameters for sending poll
+	 * @returns The sent message on success.
 	 */
-	public sendPoll(params: ISendPollParams): Promise<IMessage> {
-		return this.call("sendPoll", params);
+	public async sendPoll<T extends Context<IMessage> = IncomingMessageContext>(params: ISendPollParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.call("sendPoll", params));
 	}
 
 	/**
-	 * Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
+	 * Use this method to send an animated emoji that will display a random value. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#senddice)
+	 * 
+	 * @param params The parameters for sending dice
+	 * @returns The sent message on success.
 	 */
-	public sendDice(params: ISendDiceParams): Promise<IMessage> {
-		return this.call("sendDice", params);
+	public async sendDice<T extends Context<IMessage> = IncomingMessageContext>(params: ISendDiceParams): Promise<T> {
+		return this.client.contexts.getContext("IncomingMessage", await this.call("sendDice", params));
 	}
 
 	/**
@@ -601,31 +713,61 @@ export class API {
 	}
 
 	/**
-	 * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * Use this method to edit text and game messages. 
+	 * On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#editmessagetext)
+	 * 
+	 * @param params The parameters for editing text.
+	 * @returns The edited message on success.
 	 */
-	public editMessageText(params: IEditMessageTextParams): Promise<IMessage | true> {
-		return this.call("editMessageText", params);
+	public async editMessageText<T extends Context<IMessage> = IncomingMessageContext>(params: IEditMessageTextParams): Promise<T | true> {
+		const response = await this.upload("editMessageText", params);
+		return typeof response === "object" ? this.client.contexts.getContext("IncomingMessage", response) : response;
 	}
 
 	/**
-	 * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * Use this method to edit captions of messages. 
+	 * On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#editmessagecaption)
+	 * 
+	 * @param params The parameters for editing caption.
+	 * @returns The edited message on success.
 	 */
-	public editMessageCaption(params: IEditMessageCaptionParams): Promise<IMessage | true> {
-		return this.call("editMessageCaption", params);
+	public async editMessageCaption<T extends Context<IMessage> = IncomingMessageContext>(params: IEditMessageCaptionParams): Promise<T | true> {
+		const response = await this.upload("editMessageCaption", params);
+		return typeof response === "object" ? this.client.contexts.getContext("IncomingMessage", response) : response;
 	}
 
 	/**
-	 * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * Use this method to edit animation, audio, document, photo, or video messages. 
+	 * If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. 
+	 * When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. 
+	 * On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#editmessagemedia)
+	 * 
+	 * @param params The parameters for editing media.
+	 * @returns The edited message on success.
 	 */
-	public editMessageMedia(params: IEditMessageMediaParams): Promise<IMessage | true> {
-		return this.upload("editMessageMedia", params);
+	public async editMessageMedia<T extends Context<IMessage> = IncomingMessageContext>(params: IEditMessageMediaParams): Promise<T | true> {
+		const response = await this.upload("editMessageMedia", params);
+		return typeof response === "object" ? this.client.contexts.getContext("IncomingMessage", response) : response;
 	}
 
 	/**
-	 * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * Use this method to edit only the reply markup of messages. 
+	 * On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#editmessagereplymarkup)
+	 * 
+	 * @param params The parameters for editing reply markup
+	 * @returns The edited message on success.
 	 */
-	public editMessageReplyMarkup(params: IEditMessageReplyMarkupParams): Promise<IMessage | true> {
-		return this.call("editMessageReplyMarkup", params);
+	public async editMessageReplyMarkup<T extends Context<IMessage> = IncomingMessageContext>(params: IEditMessageReplyMarkupParams): Promise<T | true> {
+		const response = await this.upload("editMessageReplyMarkup", params);
+		return typeof response === "object" ? this.client.contexts.getContext("IncomingMessage", response) : response;
 	}
 
 	/**
@@ -659,10 +801,16 @@ export class API {
 	}
 
 	/**
-	 * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
+	 * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendsticker)
+	 * 
+	 * @param The parameters for sending sticker.
+	 * @returns The sent message on success.
 	 */
-	public sendSticker(params: ISendStickerParams): Promise<IMessage> {
-		return this.upload("sendSticker", params);
+	public async sendSticker<T extends Context<IMessage> = IncomingMessageContext>(params: ISendStickerParams): Promise<T> {
+		return this.client.contexts.getContext("Message", await this.upload("sendSticker", params));
 	}
 
 	/**
@@ -736,10 +884,16 @@ export class API {
 	}
 
 	/**
-	 * Use this method to send invoices. On success, the sent Message is returned.
+	 * Use this method to send invoices. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendinvoice)
+	 * 
+	 * @param params The parameters for sending invoices.
+	 * @returns The sent message on success.
 	 */
-	public sendInvoice(params: ISendInvoiceParams): Promise<IMessage> {
-		return this.call("sendInvoice", params);
+	public async sendInvoice<T extends Context<IMessage> = IncomingMessageContext>(params: ISendInvoiceParams): Promise<T> {
+		return this.client.contexts.getContext("Message", await this.call("sendInvoice", params));
 	}
 
 	/**
@@ -773,17 +927,29 @@ export class API {
 	}
 
 	/**
-	 * Use this method to send a game. On success, the sent Message is returned.
+	 * Use this method to send a game. 
+	 * On success, the sent Message is returned.
+	 * 
+	 * [Telegram Documentation](https://core.telegram.org/bots/api#sendgame)
+	 * 
+	 * @param params The parameters for sending game.
+	 * @returns The sent message on success.
 	 */
-	public sendGame(params: ISendGameParams): Promise<IMessage> {
-		return this.call("sendGame", params);
+	public async sendGame<T extends Context<IMessage> = IncomingMessageContext>(params: ISendGameParams): Promise<T> {
+		return this.client.contexts.getContext("Message", await this.call("sendGame", params));
 	}
 
 	/**
-	 * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the Message is returned, otherwise True is returned. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
+	 * Use this method to set the score of the specified user in a game message. 
+	 * On success, if the message is not an inline message, the Message is returned, otherwise True is returned. 
+	 * Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
+	 * 
+	 * @param params The parameters for setting game score
+	 * @returns The sent message on success.
 	 */
-	public setGameScore(params: ISetGameScoreParams): Promise<IMessage | true> {
-		return this.call("setGameScore", params);
+	public async setGameScore<T extends Context<IMessage> = IncomingMessageContext>(params: ISetGameScoreParams): Promise<T | true> {
+		const response = await this.call("setGameScore", params);
+		return typeof response === "object" ? this.client.contexts.getContext("IncomingMessage", response) : response;
 	}
 
 	/**

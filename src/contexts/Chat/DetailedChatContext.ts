@@ -1,11 +1,11 @@
-import type { IChatLocation, IChatPermissions, IChatPhoto, IMessage } from "../../interfaces";
-import { ChatContext } from "./ChatContext";
+import type { IChatLocation, IChatPermissions, IChatPhoto } from "../../interfaces";
+import { MessageContext, ChatContext } from "../";
 
 export class DetailedChatContext extends ChatContext {
 	/* The chat's photo object. */
 	public photo = this._source.photo && this.client.contexts.getContext<IChatPhoto>("ChatPhoto", this._source.photo);
 	/** The chat's pinned message object. */
-	public pinnedMessage = this._source.pinned_message && this.client.contexts.getContext<IMessage>("Message", this._source.pinned_message);
+	public pinnedMessage = this._source.pinned_message && this.client.contexts.getContext<MessageContext>("Message", this._source.pinned_message);
 	/** The chat's permissions object. */
 	public permissions = this._source.permissions && this.client.contexts.getContext<IChatPermissions>("ChatPermissions", this._source.permissions);
 	/** The chat's location object. */

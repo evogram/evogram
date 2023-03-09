@@ -1,7 +1,7 @@
-import type { IMessage, IUpdateName } from "../interfaces";
+import type { IUpdateName } from "../interfaces";
 import { Evogram } from "../Client";
 import { Polling, Webhook } from "../transports";
-import { CallbackQueryContext, ChatJoinRequestContext, ChatMemberUpdatedContext, ChosenInlineResultContext, InlineQueryContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext } from "../contexts";
+import { CallbackQueryContext, ChatJoinRequestContext, ChatMemberUpdatedContext, ChosenInlineResultContext, InlineQueryContext, MessageContext, PollAnswerContext, PollContext, PreCheckoutQueryContext, ShippingQueryContext, UpdateContext } from "../contexts";
 
 export type IUpdateHandler<T> = (data: T) => Promise<void> | void;
 
@@ -16,7 +16,7 @@ export class Updates {
 		this.webhook = new Webhook(client, this);
 	}
 
-	public on(update: "message" | "edited_message" | "channel_post" | "edited_channel_post", handler: IUpdateHandler<IMessage>): this;
+	public on(update: "message" | "edited_message" | "channel_post" | "edited_channel_post", handler: IUpdateHandler<MessageContext>): this;
 	public on(update: "inline_query", handler: IUpdateHandler<InlineQueryContext>): this;
 	public on(update: "chosen_inline_result", handler: IUpdateHandler<ChosenInlineResultContext>): this;
 	public on(update: "callback_query", handler: IUpdateHandler<CallbackQueryContext>): this;
