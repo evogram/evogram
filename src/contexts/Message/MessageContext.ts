@@ -1,6 +1,7 @@
 import type { IChatActionType, IForwardMessageParams, IMessage, IMessageEntity, IPinChatMessageParams, ISendMessageParams, IUnpinChatMessageParams } from "../../interfaces";
 import { Context } from "../../modules/context";
-import { ChatContext, UserContext, VenueContext, LocationContext, ForwardMessageContext, PollContext, IncomingMessageContext, ForumTopicContext } from "../";
+import { ChatContext, UserContext, VenueContext, LocationContext, ForwardMessageContext, PollContext, ForumTopicContext } from "../";
+import { IncomingMessageContext } from "./";
 
 export class MessageContext extends Context<IMessage> {
 	public source = this._source;

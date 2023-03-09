@@ -1,5 +1,6 @@
 import type { IEditMessageTextParams } from "../../interfaces";
-import { BotContext, MessageContext } from "../";
+import { BotContext } from "../";
+import { MessageContext } from "./";
 
 export class IncomingMessageContext extends MessageContext {
 	public user = this.source.from && this.client.contexts.getContext<BotContext>("Bot", this.source.from);

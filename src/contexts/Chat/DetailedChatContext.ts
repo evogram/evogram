@@ -1,5 +1,6 @@
 import type { IChatLocation, IChatPermissions, IChatPhoto } from "../../interfaces";
-import { MessageContext, ChatContext } from "../";
+import { MessageContext } from "../";
+import { ChatContext } from "./";
 
 export class DetailedChatContext extends ChatContext {
 	/* The chat's photo object. */

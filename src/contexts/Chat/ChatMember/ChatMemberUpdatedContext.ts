@@ -1,6 +1,7 @@
 import { IChatMemberUpdated } from "../../../interfaces";
 import { Context } from "../../../modules/context";
-import { UserContext, ChatContext, ChatInviteLinkContext, ChatMemberContext } from "../../";
+import { UserContext } from "../../"
+import { ChatContext, ChatInviteLinkContext, ChatMemberContext } from "../";
 
 export class ChatMemberUpdatedContext extends Context<IChatMemberUpdated> {
 	/** The chat where the update happened. */
