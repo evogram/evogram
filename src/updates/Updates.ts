@@ -9,6 +9,7 @@ export class Updates {
 	public polling: Polling;
 	public webhook: Webhook;
 
+	/** Object with all update handlers */
 	public handlers: { [updateName in IUpdateName]?: ((data: any) => Promise<void> | void)[]} = {}
 
 	constructor(client: Evogram) {
@@ -16,6 +17,17 @@ export class Updates {
 		this.webhook = new Webhook(client, this);
 	}
 
+	/**
+	 * Method for registering update handlers
+	 * @param {IUpdateName} update Name of the update to be processed
+	 * @param {IUpdateName} handler Callback function, which will be called on a new update
+	 * @return {Updates} Return this
+	 *
+	 * @example
+	 * 	client.updates.on("message", message => {
+	 * 	    message.send("Hello, world!");
+	 * 	});
+	 */
 	public on(update: "message" | "edited_message" | "channel_post" | "edited_channel_post", handler: IUpdateHandler<MessageContext>): this;
 	public on(update: "inline_query", handler: IUpdateHandler<InlineQueryContext>): this;
 	public on(update: "chosen_inline_result", handler: IUpdateHandler<ChosenInlineResultContext>): this;
@@ -31,6 +43,10 @@ export class Updates {
 		return this;
 	}
 
+	/**
+	 * A method for handling Telegram updates
+	 * @param {UpdateContext} update Update to be processed
+	 */
 	public async onUpdate(update: UpdateContext) {
 		if(!update.name || !this.handlers[update.name]) return;
 		//@ts-ignore

@@ -19,6 +19,7 @@ export class Webhook extends EventTransport {
 		});
 	}
 	
+	/** Running webhook */
 	public async start(params: ISetWebhookParams, port?: number) {
 		if(this.state === EventTransportState.Enabled) return;
 
@@ -34,6 +35,7 @@ export class Webhook extends EventTransport {
 		this.state = EventTransportState.Enabled;
 	}
 
+	/** Stopping webhook */
 	public stop() {
 		this.state = EventTransportState.Disabled;
 		this.webhookServer?.close();

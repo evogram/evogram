@@ -2,11 +2,13 @@ import type { IGetUpdatesParams } from "../interfaces";
 import { EventTransport, EventTransportState } from "./EventTransport";
 
 export class Polling extends EventTransport {
+	/** Running longpoll */
 	public async start(params?: IGetUpdatesParams) {
 		this.state = EventTransportState.Enabled;
 		return this.worker(params);
 	}
 
+	/** Stopping longpoll */
 	public stop() {
 		this.state = EventTransportState.Disabled;
 	}
