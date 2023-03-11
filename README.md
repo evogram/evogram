@@ -1,4 +1,4 @@
-![logo](https://i.imgur.com/eRnrTl1.png)
+![logo](https://i.imgur.com/saKG5ap.jpg)
 
 # Introduction
 *Welcome to the Evogram Telegram Framework! This framework provides an easy and convenient way to build Telegram bots in Node.js. In this guide, we will walk you through the steps to download Node.js, create a Telegram bot, and install the Evogram package.*
@@ -22,13 +22,13 @@ const { Evogram } = require('evogram');
 const client = new Evogram({ token: "YOUR_TOKEN" });
 
 client.updates.on("message", (message) => {
-    client.api.sendMessage({ text: message.text || "Sorry, I can only repeat the text.", chat_id: message.chat.id });
+    message.send(message.text || "Sorry, I can only repeat the text.");
 });
 
-client.updates.startLongpoll();
+client.updates.polling.start();
 ```
 
-*In the code above, we use the Evogram constructor to create a new instance of the bot, passing in the API token. Then we define a message event handler to reply to any text message received with the same text. Finally, we launch the bot using the `startLongpoll()` method.*
+*In the code above, we use the Evogram constructor to create a new instance of the bot, passing in the API token. Then we define a message event handler to reply to any text message received with the same text. Finally, we launch the bot using the `client.updates.polling.start()` method.*
 
 # Conclusion
 The framework is constantly being developed and updated with new features, so stay tuned for more updates in the future. Whether you are just starting out or have extensive experience with Telegram bots, Evogram provides a simple and effective solution for building and deploying your bots.
